@@ -48,7 +48,7 @@ Then, each chapter is a context, with a detail of each result.
 
 ## Inspiration
 
-This package is heavily inspired by the output provided by the [SASUnit - Unit testing for SAS(tm)-programs](https://sourceforge.net/p/sasunit/). (Yes, we did it on purpose).
+This package is heavily inspired by the output provided the [SASUnit.Unit testing for SAS(tm)-programs](https://sourceforge.net/p/sasunit/). (Yes, we did it on purpose).
 
 ## CoC
 
