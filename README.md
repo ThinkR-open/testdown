@@ -18,11 +18,13 @@ remotes::install_github("ThinkR-open/testdown")
 
 ## About
 
-This package has only one exported function, `test_down()`. It takes : +
-The path to a package: default is “.”, so it can be run from the command
-line while developping a package + The path to export the bookdown to.
-Default is `test/testdown`. + `open`: should the book be opened after
-compilation? Default is `TRUE`.
+This package has only one exported function, `test_down()`. It takes:
+
+  - The path to a package: default is “.”, so it can be run from the
+    command line while developping a package
+  - The path to export the bookdown to. Default is `test/testdown`.
+  - `open`: should the book be opened after compilation? Default is
+    `TRUE`.
 
 ## Screenshot
 
@@ -38,8 +40,10 @@ Then, each chapter is a context, with a detail of each result.
 
 This package is heavily inspired by the output provided by the [SASUnit
 - Unit testing for
-SAS(tm)-programs](https://sourceforge.net/p/sasunit/wiki/User%27s%20Guide/).
-(Yes, we did it on purpose).
+SAS(tm)-programs](https://sourceforge.net/p/sasunit/). (Yes, we did it
+on purpose).
+
+## CoC
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
