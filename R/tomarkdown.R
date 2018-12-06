@@ -59,7 +59,7 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @importFrom rmarkdown render
 #' @importFrom stats setNames
 #' @importFrom tidyr nest
-#' @importFrom utils read.csv2
+#' @importFrom utils read.csv2 browseURL data
 test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   meta <- as.package(pkg)
   unlink(file.path(pkg, book_path), recursive = TRUE)
