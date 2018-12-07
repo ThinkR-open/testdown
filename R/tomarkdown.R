@@ -59,14 +59,15 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @importFrom rmarkdown render
 #' @importFrom stats setNames
 #' @importFrom tidyr nest
-#' @importFrom utils read.csv2
+#' @importFrom utils read.csv2 browseURL data
+#' @importFrom magrittr %>%
 test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   meta <- as.package(pkg)
   unlink(file.path(pkg, book_path), recursive = TRUE)
   if_not(
     file.path(pkg, book_path),
     dir.exists,
-    ~ dir.create(file.path(pkg, book_path))
+    ~ dir.create(file.path(pkg, book_path),recursive = TRUE)
   )
   lapply(
     list.files(system.file("booktemplate/", package = "testdown"), full.names = TRUE),
