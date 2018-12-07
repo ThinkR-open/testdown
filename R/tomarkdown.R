@@ -28,9 +28,14 @@ rmd_reporter <- R6Class(classname = "CR",
                                 status <- expectation_type(result)
                                 call <- paste(deparse(result$expectation_calls[[1]]), collapse = "")
                                 call <- gsub(" {2,}", " ", call)
+                                if (result$message != "success"){
+                                  tmessage <- gsub("\n", " ", result$message)
+                                } else {
+                                  tmessage <- "None"
+                                }
                                 line_to_add <- paste0(context, "; `", call, "` ; ",
                                                       location, " ; ", Sys.time(), "; ", status,
-                                                      ";", normalizePath(attr(ref, "srcfile")$filename) )
+                                                      ";", normalizePath(attr(ref, "srcfile")$filename), ";", tmessage )
                                 write(line_to_add, temp_csv, append = TRUE)
                               },
 
@@ -53,6 +58,7 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @export
 #'
 #' @importFrom attempt if_not
+#' @importFrom glue glue
 #' @importFrom devtools as.package test
 #' @importFrom dplyr group_by pull
 #' @importFrom knitr kable knit
@@ -62,6 +68,8 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @importFrom utils read.csv2 browseURL data
 #' @importFrom magrittr %>%
 test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
+  #browser()
+  x <- devtools::session_info()
   meta <- as.package(pkg)
   unlink(file.path(pkg, book_path), recursive = TRUE)
   if_not(
@@ -90,16 +98,27 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   temp_csv <- file.path(pkg, "tests/testdown", "testcsv.csv")
   file.create(temp_csv)
   on.exit(unlink(temp_csv))
-  write(file = temp_csv, "Context; Test;Location;Test time;Result;File Name")
+  write(file = temp_csv, "Context; Test;Location;Test time;Result;File Name;Message")
   a <- test(pkg, reporter = rmd_reporter)
 
   write_in <- function(x, there = file.path(pkg, "tests/testdown", "index.Rmd")){
     write(x, file = there, append = TRUE)
   }
   write_in("\n")
-  write_in(paste("# Coverage results for package", meta$package,"{-} \n"))
-  write_in(paste("Done on:", Sys.time(),"\n"))
+  write_in(paste("# {testdown} for package", meta$package,"{-} \n"))
+  write_in(paste("> Done on:", Sys.time(),"\n"))
   write_in("\n")
+  write_in("__Package Information:__  \n")
+  write_in(glue("+ __Title__ : {meta$title}"))
+  write_in(glue("+ __Version__ : {meta$version}"))
+  write_in(glue("+ __Description__ : {meta$description}"))
+  write_in("\n")
+  write_in("<details><summary>Session Info</summary>")
+  write_in("```{r}")
+  write_in("devtools::session_info()")
+  write_in("```")
+  write_in("</details>")
+  write_in(paste("# Global results for package", meta$package,"{-} \n"))
   write_in(kable(a))
   y <- read.csv2(temp_csv)
   x <- y %>%
@@ -124,7 +143,7 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   res
 }
 
-#test_down(pkg = "../attempt/")
+#' test_down(pkg = "../funk/")
 
 #' #' Testthat results to Rmd
 #' #'
