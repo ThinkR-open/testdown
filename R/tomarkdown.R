@@ -60,7 +60,7 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @importFrom attempt if_not
 #' @importFrom glue glue
 #' @importFrom devtools as.package test
-#' @importFrom dplyr group_by pull
+#' @importFrom dplyr group_by pull filter
 #' @importFrom knitr kable knit
 #' @importFrom rmarkdown render
 #' @importFrom stats setNames
@@ -120,7 +120,9 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   write_in("</details>")
   write_in(paste("# Global results for package", meta$package,"{-} \n"))
   write_in(kable(a))
-  y <- read.csv2(temp_csv)
+  y <- read.csv2(temp_csv, stringsAsFactors = FALSE)
+  failed <- filter(y, Result != " success")
+  failed$File.Name <- NULL
   x <- y %>%
     group_by(Context, File.Name) %>%
     nest()
@@ -130,9 +132,12 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
     write_in("\n")
     write_in( paste( "#", names(res)[i] ) )
     write_in("\n")
-    write_in(kable(res[i]))
+    write_in(kable(res[[i]]))
     write_in("\n")
   }
+
+  write_in(paste("# Aggregated errors for package", meta$package,"{-} \n"))
+  write_in(kable(failed))
 
   res <- render(
     file.path(pkg, "tests/testdown", "index.Rmd"))
