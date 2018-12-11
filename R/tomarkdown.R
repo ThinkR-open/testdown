@@ -46,6 +46,53 @@ rmd_reporter <- R6Class(classname = "CR",
                               }
                             )
 )
+#' @importFrom testthat LocationReporter
+#' @importFrom R6 R6Class
+
+rmd_reporter2 <- R6Class(classname = "CR",
+                            inherit = LocationReporter,
+                            public = list(
+                              ctx_list = c(),
+                              start_test = function(context, test) {
+                              },
+                              initialize = function(...){
+                                super$initialize(...)
+                              },
+
+                              add_result = function(context, test, result) {
+                                ref <- result$srcref
+                                lt  <- result$test
+                                if (is.null(ref)) {
+                                  location <- "?#?:?"
+                                } else {
+                                  location <- paste0(
+                                    basename(attr(ref, "srcfile")$filename), "#", ref[1], ":1")
+                                }
+                                temp_csv <- file.path(
+                                  dirname(dirname(normalizePath(basename(attr(ref, "srcfile")$filename)))),
+                                  "testdown", "testcsv.csv"
+                                )
+                                status <- expectation_type(result)
+                                call <- paste(deparse(result$expectation_calls[[1]]), collapse = "")
+                                call <- gsub(" {2,}", " ", call)
+                                if (result$message != "success"){
+                                  tmessage <- gsub("\n", " ", result$message)
+                                } else {
+                                  tmessage <- "None"
+                                }
+                                line_to_add <- paste0(context, "; `", call, "` ; ",
+                                                      location, " ; ", lt, "; ", status,
+                                                      ";", normalizePath(attr(ref, "srcfile")$filename), ";", tmessage )
+                                write(line_to_add, temp_csv, append = TRUE)
+                              },
+
+                              end_test = function(context, test) {
+                                self$cat_line()
+                                self$cat_line("Test ended at ", Sys.time())
+                                self$cat_line()
+                              }
+                            )
+)
 
 #' testthat to bookdown
 #'
@@ -57,6 +104,7 @@ rmd_reporter <- R6Class(classname = "CR",
 #'
 #' @export
 #'
+#' @import stringr
 #' @importFrom attempt if_not
 #' @importFrom glue glue
 #' @importFrom devtools as.package test
@@ -68,7 +116,6 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @importFrom utils read.csv2 browseURL data
 #' @importFrom magrittr %>%
 test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
-  #browser()
   x <- devtools::session_info()
   meta <- as.package(pkg)
   unlink(file.path(pkg, book_path), recursive = TRUE)
@@ -99,8 +146,7 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   file.create(temp_csv)
   on.exit(unlink(temp_csv))
   write(file = temp_csv, "Context; Test;Location;Test time;Result;File Name;Message")
-  a <- test(pkg, reporter = rmd_reporter)
-
+  a <- test(pkg, reporter = rmd_reporter2)
   write_in <- function(x, there = file.path(pkg, "tests/testdown", "index.Rmd")){
     write(x, file = there, append = TRUE)
   }
@@ -122,6 +168,14 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   write_in(kable(a))
   y <- read.csv2(temp_csv, stringsAsFactors = FALSE)
   failed <- filter(y, Result != " success")
+  save(failed,file = "failed.Rdata")
+  failed <- failed %>%
+    select(incidateur = Test.time,Message) %>%
+    mutate(Message = Message %>%
+             stringr::str_extract("mismatches .*$") %>%
+             stringr::str_remove("mismatches") %>%
+             stringr::str_remove("\\[1\\]")
+             )
   failed$File.Name <- NULL
   x <- y %>%
     group_by(Context, File.Name) %>%
