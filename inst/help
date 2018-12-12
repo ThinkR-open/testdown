@@ -1,12 +1,12 @@
 ## How to read {testdown} reports {-}
 
-### First page
+### First page {-}
 
-The index page contains a quick summary of the tests context: date, package developper, and package information. The Session Info dropdown details the current R session in which the tests were performed.
+The index page contains a quick summary of the tests context: date, package developer, and package information. The Session Info drop down details the current R session in which the tests were performed.
 
-### Global results from Package
+### Global results from Package {-}
 
-This table shows results, agregated by tests.
+This table shows results, aggregated by tests.
 
 + file: the test file
 + context: the context of the test
@@ -15,7 +15,7 @@ This table shows results, agregated by tests.
 + failed / skipped / error / warning: output of the test
 + user / system / real: information about timing of the test
 
-### Results
+### Results {-}
 
 Each chapter corresponds to a context, with:
 
@@ -25,6 +25,6 @@ Each chapter corresponds to a context, with:
 + Result: output of the test
 + Message: error message, if any
 
-### Aggregated errors
+### Aggregated errors {-}
 
 Compilation of all the expectation that failed.
