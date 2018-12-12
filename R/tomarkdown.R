@@ -67,7 +67,7 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @importFrom tidyr nest
 #' @importFrom utils read.csv2 browseURL data
 #' @importFrom magrittr %>%
-test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
+test_down <- function(pkg = ".", book_path = "tests/testdown", with_help = TRUE, open = TRUE){
   #browser()
   x <- devtools::session_info()
   meta <- as.package(pkg)
@@ -92,13 +92,13 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   )
   replace_in_file(
     file.path(pkg, "tests/testdown", "index.Rmd"),
-    "Yihui Xie",
+    "YYYY",
     gsub("([^<]+) <.*", "\\1", eval(parse(text = meta$`authors@r`)))
   )
   temp_csv <- file.path(pkg, "tests/testdown", "testcsv.csv")
   file.create(temp_csv)
   on.exit(unlink(temp_csv))
-  write(file = temp_csv, "Context; Test;Location;Test time;Result;File Name;Message")
+  write(file = temp_csv, "Context; Expectation;Location;Test time;Result;File Name;Message")
   a <- test(pkg, reporter = rmd_reporter)
 
   write_in <- function(x, there = file.path(pkg, "tests/testdown", "index.Rmd")){
@@ -118,6 +118,8 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   write_in("devtools::session_info()")
   write_in("```")
   write_in("</details>")
+  write_in("\n\n")
+  write_in("# (PART) Results {-}")
   write_in(paste("# Global results for package", meta$package,"{-} \n"))
   write_in(kable(a))
   y <- read.csv2(temp_csv, stringsAsFactors = FALSE)
@@ -138,6 +140,17 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
 
   write_in(paste("# Aggregated errors for package", meta$package,"{-} \n"))
   write_in(kable(failed))
+
+  if (with_help){
+    write_in("# (PART) Appendix {-}")
+    write_in("# A. How to read this report {-} \n")
+    write_in(
+      readLines(
+        system.file("help", package = "testdown")
+      )
+    )
+
+  }
 
   res <- render(
     file.path(pkg, "tests/testdown", "index.Rmd"))
