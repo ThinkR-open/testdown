@@ -33,7 +33,8 @@ rmd_reporter <- R6Class(classname = "CR",
                                 } else {
                                   tmessage <- "None"
                                 }
-                                line_to_add <- paste0(context, "; `", call, "` ; ",
+                                test <- result$test
+                                line_to_add <- paste0(context, ";",result$test, "; `", call, "` ; ",
                                                       location, " ; ", Sys.time(), "; ", status,
                                                       ";", normalizePath(attr(ref, "srcfile")$filename), ";", tmessage )
                                 write(line_to_add, temp_csv, append = TRUE)
@@ -98,7 +99,7 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", with_help = TRUE,
   temp_csv <- file.path(pkg, "tests/testdown", "testcsv.csv")
   file.create(temp_csv)
   on.exit(unlink(temp_csv))
-  write(file = temp_csv, "Context; Expectation;Location;Test time;Result;File Name;Message")
+  write(file = temp_csv, "Context; Test; Expectation;Location;Test time;Result;File Name;Message")
   a <- test(pkg, reporter = rmd_reporter)
 
   write_in <- function(x, there = file.path(pkg, "tests/testdown", "index.Rmd")){
@@ -125,6 +126,7 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", with_help = TRUE,
   y <- read.csv2(temp_csv, stringsAsFactors = FALSE)
   failed <- filter(y, Result != " success")
   failed$File.Name <- NULL
+  failed$Result <- NULL
   x <- y %>%
     group_by(Context, File.Name) %>%
     nest()
@@ -134,7 +136,9 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", with_help = TRUE,
     write_in("\n")
     write_in( paste( "#", names(res)[i] ) )
     write_in("\n")
-    write_in(kable(res[[i]]))
+    table_to_insert <- res[[i]]
+    table_to_insert$Result <- gsub("failure", "<font color='red'>failure</font>", table_to_insert$Result )
+    write_in(kable(table_to_insert))
     write_in("\n")
   }
 
