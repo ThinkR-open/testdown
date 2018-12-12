@@ -1,6 +1,6 @@
 --- 
 title: "{testdown} report"
-author: "Yihui Xie"
+author: "YYYY"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book

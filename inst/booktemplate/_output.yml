@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <h3>  {testdown} report</h3>
+        <h3>&nbsp;&nbsp;&nbsp;{testdown} report</h3>
       after: |
         <li><a href="https://github.com/ThinkR-open/testdown" target="blank">Built with {testdown} and {bookdown}</a></li>
 bookdown::pdf_book:
