@@ -74,26 +74,26 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
     function(x){file.copy(from = x, to = normalizePath(file.path(pkg, book_path)))}
   )
   replace_in_file(
-    file.path(pkg, "tests/testdown", "_bookdown.yml"),
+    file.path(pkg, book_path, "_bookdown.yml"),
     "teeest",
     meta$package)
   replace_in_file(
-    file.path(pkg, "tests/testdown", "index.Rmd"),
+    file.path(pkg, book_path, "index.Rmd"),
     "XXXXXX",
     meta$package
   )
   replace_in_file(
-    file.path(pkg, "tests/testdown", "index.Rmd"),
+    file.path(pkg, book_path, "index.Rmd"),
     "Yihui Xie",
     gsub("([^<]+) <.*", "\\1", eval(parse(text = meta$`authors@r`)))
   )
-  temp_csv <- file.path(pkg, "tests/testdown", "testcsv.csv")
+  temp_csv <- file.path(pkg, book_path, "testcsv.csv")
   file.create(temp_csv)
   on.exit(unlink(temp_csv))
   write(file = temp_csv, "Context; Test;Location;Test time;Result;File Name")
   a <- test(pkg, reporter = rmd_reporter)
 
-  write_in <- function(x, there = file.path(pkg, "tests/testdown", "index.Rmd")){
+  write_in <- function(x, there = file.path(pkg, book_path, "index.Rmd")){
     write(x, file = there, append = TRUE)
   }
   write_in("\n")
@@ -116,8 +116,8 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   }
 
   res <- render(
-    file.path(pkg, "tests/testdown", "index.Rmd"))
-  #knit(file.path(pkg, "tests/testdown", "index.Rmd"))
+    file.path(pkg, book_path, "index.Rmd"))
+  #knit(file.path(pkg, book_path, "index.Rmd"))
   if (open){
     browseURL(res)
   }

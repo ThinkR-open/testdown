@@ -6,24 +6,25 @@ Authors@R:
            family = "Fay",
            role = c("cre", "aut"),
            email = "contact@colinfay.me",
-           comment = structure("0000-0001-7343-1846", .Names = "ORCID"))
+           comment = c(ORCID = "0000-0001-7343-1846"))
 Description: Turn your 'testthat' results a Bookdown.
 License: MIT + file LICENSE
 URL: https://github.com/thinkr-open/testdown
 BugReports: https://github.com/thinkr-open/testdown/issues
 Imports: 
     attempt,
-    bookdown,
     devtools,
     dplyr,
-    glue,
     knitr,
+    magrittr,
     R6,
     rmarkdown,
     stats,
     testthat,
     tidyr,
     utils
+Suggests: 
+    bookdown
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1

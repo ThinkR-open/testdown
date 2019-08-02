@@ -1,3 +1,6 @@
+usethis::use_build_ignore("devtoolsstuffs.R")
+usethis::use_build_ignore("readmefigs/")
+
 library(usethis)
 library(desc)
 library(glue)
@@ -50,3 +53,5 @@ use_package("tidyr")
 use_package("bookdown")
 use_package("magrittr")
 use_tidy_description()
+
+attachment::att_to_description(extra.suggests = "bookdown")

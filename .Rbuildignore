@@ -6,3 +6,5 @@
 ^CODE_OF_CONDUCT\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^devtoolsstuffs\.R$
+^readmefigs$
