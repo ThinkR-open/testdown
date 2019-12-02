@@ -3,44 +3,45 @@ expectation_type <- getFromNamespace("expectation_type", "testthat")
 #' @importFrom testthat LocationReporter
 #' @importFrom R6 R6Class
 
-rmd_reporter <- R6Class(classname = "CR",
-                            inherit = LocationReporter,
-                            public = list(
-                              ctx_list = c(),
-                              start_test = function(context, test) {
-                              },
-                              initialize = function(...){
-                                super$initialize(...)
-                              },
+rmd_reporter <- R6Class(
+  classname = "CR",
+  inherit = LocationReporter,
+  public = list(
+    ctx_list = c(),
+    start_test = function(context, test) {
+    },
+    initialize = function(...){
+      super$initialize(...)
+    },
 
-                              add_result = function(context, test, result) {
-                                ref <- result$srcref
-                                if (is.null(ref)) {
-                                  location <- "?#?:?"
-                                } else {
-                                  location <- paste0(
-                                    basename(attr(ref, "srcfile")$filename), "#", ref[1], ":1")
-                                }
-                                # temp_csv <- file.path(
-                                #   dirname(dirname(normalizePath(basename(attr(ref, "srcfile")$filename)))),
-                                #   "testdown", "testcsv.csv"
-                                # )
-                                temp_csv <- file.path(tempdir(), "testcsv.csv")
-                                status <- expectation_type(result)
-                                call <- paste(deparse(result$expectation_calls[[1]]), collapse = "")
-                                call <- gsub(" {2,}", " ", call)
-                                line_to_add <- paste0(context, "; `", call, "` ; ",
-                                                      location, " ; ", Sys.time(), "; ", status,
-                                                      ";", normalizePath(attr(ref, "srcfile")$filename) )
-                                write(line_to_add, temp_csv, append = TRUE)
-                              },
+    add_result = function(context, test, result) {
+      ref <- result$srcref
+      if (is.null(ref)) {
+        location <- "?#?:?"
+      } else {
+        location <- paste0(
+          basename(attr(ref, "srcfile")$filename), "#", ref[1], ":1")
+      }
+      # temp_csv <- file.path(
+      #   dirname(dirname(normalizePath(basename(attr(ref, "srcfile")$filename)))),
+      #   "testdown", "testcsv.csv"
+      # )
+      temp_csv <- file.path(tempdir(), "testcsv.csv")
+      status <- expectation_type(result)
+      call <- paste(deparse(result$expectation_calls[[1]]), collapse = "")
+      call <- gsub(" {2,}", " ", call)
+      line_to_add <- paste0(context, "; `", call, "` ; ",
+                            location, " ; ", Sys.time(), "; ", status,
+                            ";", normalizePath(attr(ref, "srcfile")$filename) )
+      write(line_to_add, temp_csv, append = TRUE)
+    },
 
-                              end_test = function(context, test) {
-                                self$cat_line()
-                                self$cat_line("Test ended at ", Sys.time())
-                                self$cat_line()
-                              }
-                            )
+    end_test = function(context, test) {
+      self$cat_line()
+      self$cat_line("Test ended at ", Sys.time())
+      self$cat_line()
+    }
+  )
 )
 
 #' testthat to bookdown
@@ -134,6 +135,7 @@ test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
     ungroup() %>%
   # Check if there are no context
     mutate(
+      Context = as.character(Context),
       Context = ifelse(is.na(Context), "No context", Context)
     )
 
