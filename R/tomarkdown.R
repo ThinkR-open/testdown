@@ -21,10 +21,11 @@ rmd_reporter <- R6Class(classname = "CR",
                                   location <- paste0(
                                     basename(attr(ref, "srcfile")$filename), "#", ref[1], ":1")
                                 }
-                                temp_csv <- file.path(
-                                  dirname(dirname(normalizePath(basename(attr(ref, "srcfile")$filename)))),
-                                  "testdown", "testcsv.csv"
-                                )
+                                # temp_csv <- file.path(
+                                #   dirname(dirname(normalizePath(basename(attr(ref, "srcfile")$filename)))),
+                                #   "testdown", "testcsv.csv"
+                                # )
+                                temp_csv <- file.path(tempdir(), "testcsv.csv")
                                 status <- expectation_type(result)
                                 call <- paste(deparse(result$expectation_calls[[1]]), collapse = "")
                                 call <- gsub(" {2,}", " ", call)
@@ -52,9 +53,9 @@ rmd_reporter <- R6Class(classname = "CR",
 #'
 #' @export
 #'
-#' @importFrom attempt if_not
+#' @importFrom attempt if_not if_then
 #' @importFrom devtools as.package test
-#' @importFrom dplyr group_by pull
+#' @importFrom dplyr group_by pull mutate ungroup
 #' @importFrom knitr kable knit
 #' @importFrom rmarkdown render
 #' @importFrom stats setNames
@@ -63,60 +64,92 @@ rmd_reporter <- R6Class(classname = "CR",
 #' @importFrom magrittr %>%
 test_down <- function(pkg = ".", book_path = "tests/testdown", open = TRUE){
   meta <- as.package(pkg)
-  unlink(file.path(pkg, book_path), recursive = TRUE)
+  book_path <- normalizePath(book_path, mustWork = FALSE)
+  # unlink(file.path(pkg, book_path), recursive = TRUE)
+  if_then(
+    book_path, dir.exists,
+    ~ unlink(book_path, recursive = TRUE)
+  )
   if_not(
-    file.path(pkg, book_path),
+    # file.path(pkg, book_path),
+    book_path,
     dir.exists,
-    ~ dir.create(file.path(pkg, book_path),recursive = TRUE)
+    # ~ dir.create(file.path(pkg, book_path),recursive = TRUE)
+    ~ dir.create(book_path,recursive = TRUE)
   )
-  lapply(
-    list.files(system.file("booktemplate/", package = "testdown"), full.names = TRUE),
-    function(x){file.copy(from = x, to = normalizePath(file.path(pkg, book_path)))}
-  )
+  # Verify book_path works
+  book_path <- normalizePath(book_path, mustWork = TRUE)
+  # lapply(
+  #   list.files(system.file("booktemplate/", package = "testdown"),
+  #              full.names = TRUE),
+  #   function(x){
+      file.copy(
+        from = list.files(system.file("booktemplate/", package = "testdown"),
+                          full.names = TRUE),
+        # to = normalizePath(file.path(pkg, book_path))
+        to = book_path
+      )
+  #   }
+  # )
   replace_in_file(
-    file.path(pkg, book_path, "_bookdown.yml"),
+    # file.path(pkg, book_path, "_bookdown.yml"),
+    file.path(book_path, "_bookdown.yml"),
     "teeest",
     meta$package)
   replace_in_file(
-    file.path(pkg, book_path, "index.Rmd"),
+    # file.path(pkg, book_path, "index.Rmd"),
+    file.path(book_path, "index.Rmd"),
     "XXXXXX",
     meta$package
   )
   replace_in_file(
-    file.path(pkg, book_path, "index.Rmd"),
+    # file.path(pkg, book_path, "index.Rmd"),
+    file.path(book_path, "index.Rmd"),
     "Yihui Xie",
     gsub("([^<]+) <.*", "\\1", eval(parse(text = meta$`authors@r`)))
   )
-  temp_csv <- file.path(pkg, book_path, "testcsv.csv")
+  mydir <- tempdir()
+  temp_csv <- file.path(mydir, "testcsv.csv")
+  # temp_csv <- tempfile(pattern = "test-", fileext = "csv")#file.path(pkg, book_path, "testcsv.csv")
   file.create(temp_csv)
   on.exit(unlink(temp_csv))
   write(file = temp_csv, "Context; Test;Location;Test time;Result;File Name")
   a <- test(pkg, reporter = rmd_reporter)
 
-  write_in <- function(x, there = file.path(pkg, book_path, "index.Rmd")){
+  write_in <- function(
+    x,
+    # there = file.path(pkg, book_path, "index.Rmd")) {
+    there = file.path(book_path, "index.Rmd")) {
     write(x, file = there, append = TRUE)
   }
   write_in("\n")
-  write_in(paste("# Coverage results for package", meta$package,"{-} \n"))
+  write_in(paste("# Coverage results for package", meta$package, "{-} \n"))
   write_in(paste("Done on:", Sys.time(),"\n"))
   write_in("\n")
   write_in(kable(a))
   y <- read.csv2(temp_csv)
   x <- y %>%
     group_by(Context, File.Name) %>%
-    nest()
+    nest() %>%
+    ungroup() %>%
+  # Check if there are no context
+    mutate(
+      Context = ifelse(is.na(Context), "No context", Context)
+    )
+
   res <- pull(x, data)
   res <- setNames(res, x$Context)
-  for (i in seq_along(res)){
+  for (i in seq_along(res)) {
     write_in("\n")
     write_in( paste( "#", names(res)[i] ) )
     write_in("\n")
-    write_in(kable(res[i]))
+    write_in(kable(res[[i]]))
     write_in("\n")
   }
 
   res <- render(
-    file.path(pkg, book_path, "index.Rmd"))
+    # file.path(pkg, book_path, "index.Rmd"))
+    file.path(book_path, "index.Rmd"))
   #knit(file.path(pkg, book_path, "index.Rmd"))
   if (open){
     browseURL(res)
