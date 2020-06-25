@@ -1,5 +1,6 @@
 usethis::use_build_ignore("devtoolsstuffs.R")
 usethis::use_build_ignore("readmefigs/")
+usethis::use_build_ignore(".gitattributes")
 
 library(usethis)
 library(desc)
@@ -33,10 +34,13 @@ use_code_of_conduct()
 use_lifecycle_badge("Experimental")
 use_news_md()
 
+# Documentation
+usethis::use_vignette("try-testdown")
+
 
 # Test that
-use_testthat()
-use_test("")
+usethis::use_testthat()
+usethis::use_test("test_down")
 
 # Get the dependencies
 use_package("attempt")
