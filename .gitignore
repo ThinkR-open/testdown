@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 .DS_Store
+<<<<<<< HEAD
+=======
+inst/.DS_Store
+>>>>>>> 2b408139534e9befd8ba31b67818a838557cee88
