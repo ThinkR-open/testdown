@@ -8,3 +8,7 @@
 ^\.Rproj\.user$
 ^readmefigs$
 ^docs$
+^_docs$
+^devtoolsstuffs\.R$
+^readmefigs$
+^\.gitattributes$
