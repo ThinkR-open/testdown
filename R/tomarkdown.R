@@ -78,7 +78,8 @@ test_down <- function(
     meta$package
   )
   replace_in_file(
-    file.path(pkg, "tests/testdown", "index.Rmd"),
+    # file.path(pkg, book_path, "index.Rmd"),
+    file.path(book_path, "index.Rmd"),
     "XXXXXX",
     meta$package
   )
