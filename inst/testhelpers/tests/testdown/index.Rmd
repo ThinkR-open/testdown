@@ -1,0 +1,139 @@
+--- 
+title: "{testdown} report"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+description: "`{testdown}` report for package `{fakepkg}`"
+---
+
+
+# `{testdown}` Report for  `{fakepkg}` {-} 
+
+> Performed on the: 2020-07-30 16:56:15  by  Colin 
+
+----
+
+__Project Information:__  
+
++ __Project Name__ : testdown
++ __Environment__ : /Users/colin/Seafile/documents_colin/R/opensource/testdown
++ __Number of test files__ : 2
++ __Total number of tests__ : 5
++ __Total number of expectations__ : 1
++ __Total number of successful expectations__ : 10
++ __Total number of failed expectations__ : 6
++ __Total number of expectations with warnings__ : 6
++ __Total number of errored tests__ : 1
+
+
+__Tested package Information:__  
+
++ __Title__ : Package made for testing testdown
++ __Version__ : 0.0.0.9000
++ __Description__ : Basically just a package with failing tests.
+
+
+<details><summary>Test session infrastructure</summary>
+```{r echo = FALSE}
+xfun::session_info()
+```
+</details>
+
+
+
+
+# (PART) Results {-}
+# Global results for package fakepkg {-} 
+
+|Test.file          |Test                               |Date       | Num.Expectations| Failed|Was.Skipped |Errored | Time.Spent|
+|:------------------|:----------------------------------|:----------|----------------:|------:|:-----------|:-------|----------:|
+|test-hello-world.R |hello_world() works                |2020-07-30 |                4|      1|FALSE       |FALSE   |      0.371|
+|test-hello-world.R |hello_world() works with vectors   |2020-07-30 |                4|      2|FALSE       |FALSE   |      0.208|
+|test-times.R       |times() works                      |2020-07-30 |                5|      2|FALSE       |TRUE    |      0.259|
+|test-times.R       |times() works with matrix          |2020-07-30 |                4|      1|FALSE       |FALSE   |      0.174|
+|test-times.R       |times() works with {agivenpackage} |2020-07-30 |                1|      0|TRUE        |FALSE   |      0.052|
+
+
+# test-hello-world.R
+
+
+## Summary {-}
++ __Number of expectations__ : 1
++ __Number of successful expectations__ : 5
++ __Number of failed expectations__ : 3
++ __Number of expectations with warnings__ : 0
++ __Number of errored tests__ : 0
+
+
+## Details {-}
+
+
+|Test                             |Description                                                                |Expectation |Result                                     |Location              |Test_time           |
+|:--------------------------------|:--------------------------------------------------------------------------|:-----------|:------------------------------------------|:---------------------|:-------------------|
+|hello_world() works              |Testing that hello_world("colin") returns "Hello world, my name is colin!" |NULL        |&#9989; <font color='green'>Success</font> |test-hello-world.R#3  |2020-07-30 16:56:13 |
+|hello_world() works              |Testing that hello_world("colin") returns a character vector               |NULL        |&#9989; <font color='green'>Success</font> |test-hello-world.R#5  |2020-07-30 16:56:14 |
+|hello_world() works              |Testing that hello_world("colin") has World in it                          |NULL        |&#10060; <font color='red'>Failure</font>  |test-hello-world.R#7  |2020-07-30 16:56:14 |
+|hello_world() works              |Testing that hello_world("colin") has Hello in it                          |NULL        |&#9989; <font color='green'>Success</font> |test-hello-world.R#9  |2020-07-30 16:56:14 |
+|hello_world() works with vectors |Testing that hello_world("colin", "seb") returns two elements              |NULL        |&#10060; <font color='red'>Failure</font>  |test-hello-world.R#15 |2020-07-30 16:56:14 |
+|hello_world() works with vectors |Testing that hello_world(c("colin", "seb")) returns two elements           |NULL        |&#9989; <font color='green'>Success</font> |test-hello-world.R#17 |2020-07-30 16:56:14 |
+|hello_world() works with vectors |Testing that hello_world(LETTERS) returns 25 elements                      |NULL        |&#10060; <font color='red'>Failure</font>  |test-hello-world.R#19 |2020-07-30 16:56:14 |
+|hello_world() works with vectors |Testing that hello_world(LETTERS) returns 26 elements                      |NULL        |&#9989; <font color='green'>Success</font> |test-hello-world.R#21 |2020-07-30 16:56:14 |
+
+
+
+
+# test-times.R
+
+
+## Summary {-}
++ __Number of expectations__ : 1
++ __Number of successful expectations__ : 5
++ __Number of failed expectations__ : 3
++ __Number of expectations with warnings__ : 1
++ __Number of errored tests__ : 1
+
+
+## Details {-}
+
+
+|   |Test                               |Description                                                     |Expectation |Result                                                 |Location        |Test_time           |
+|:--|:----------------------------------|:---------------------------------------------------------------|:-----------|:------------------------------------------------------|:---------------|:-------------------|
+|9  |times() works                      |Testing that times(1, 3) returns 3                              |NULL        |&#9989; <font color='green'>Success</font>             |test-times.R#3  |2020-07-30 16:56:14 |
+|10 |times() works                      |Testing that times(1, "2") fails                                |NULL        |&#9989; <font color='green'>Success</font>             |test-times.R#5  |2020-07-30 16:56:14 |
+|11 |times() works                      |Testing that times(1, "a") fails                                |NULL        |&#9989; <font color='green'>Success</font>             |test-times.R#7  |2020-07-30 16:56:14 |
+|12 |times() works                      |Testing that times(1, 1:10) returns one number                  |NULL        |&#10060; <font color='red'>Failure</font>              |test-times.R#9  |2020-07-30 16:56:14 |
+|13 |times() works                      |Testing that times(1, 1:10) returns a vector                    |NULL        |&#10060; <font color='red'>Failure</font>              |test-times.R#11 |2020-07-30 16:56:14 |
+|14 |times() works                      |Testing that times(1, "3") returns 3                            |NULL        |&#10060; <font color='red'>Error (test stopped)</font> |test-times.R#13 |2020-07-30 16:56:14 |
+|15 |times() works with matrix          |Testing that the matrix size is 10 for times(1:3, matrix(1:10)) |NULL        |&#9888;&#65039; <font color='orange'>Warning</font>    |test-times.R#19 |2020-07-30 16:56:14 |
+|16 |times() works with matrix          |Testing that the matrix size is 10 for times(1:3, matrix(1:10)) |NULL        |&#9989; <font color='green'>Success</font>             |test-times.R#19 |2020-07-30 16:56:14 |
+|17 |times() works with matrix          |Testing that the matrix size is 10 for times(1:3, matrix(1:15)) |NULL        |&#10060; <font color='red'>Failure</font>              |test-times.R#21 |2020-07-30 16:56:14 |
+|18 |times() works with matrix          |Testing that the matrix size is 10 for times(1:2, matrix(1:10)) |NULL        |&#9989; <font color='green'>Success</font>             |test-times.R#23 |2020-07-30 16:56:14 |
+|19 |times() works with {agivenpackage} |                                                                |NULL        |&#128260; <font color='blue'>Skipped</font>            |test-times.R#28 |2020-07-30 16:56:15 |
+
+
+# Aggregated failures 
+
+|File                  |Test                             |Description                                                     |Expectation |Message                                                                                                                               |
+|:---------------------|:--------------------------------|:---------------------------------------------------------------|:-----------|:-------------------------------------------------------------------------------------------------------------------------------------|
+|test-hello-world.R#7  |hello_world() works              |Testing that hello_world("colin") has World in it               |NULL        |hello_world\("colin"\) does not match "World". Actual value: "Hello world, my name is colin!"                                         |
+|test-hello-world.R#15 |hello_world() works with vectors |Testing that hello_world("colin", "seb") returns two elements   |NULL        |`hello_world("colin", "seb")` threw an error with unexpected message. Expected match: "2" Actual message: "unused argument (\"seb\")" |
+|test-hello-world.R#19 |hello_world() works with vectors |Testing that hello_world(LETTERS) returns 25 elements           |NULL        |hello_world(LETTERS) has length 26, not length 25.                                                                                    |
+|test-times.R#9        |times() works                    |Testing that times(1, 1:10) returns one number                  |NULL        |times(1, 1:10) has length 10, not length 1.                                                                                           |
+|test-times.R#11       |times() works                    |Testing that times(1, 1:10) returns a vector                    |NULL        |times(1, 1:10) inherits from `numeric` not `vector`.                                                                                  |
+|test-times.R#13       |times() works                    |Testing that times(1, "3") returns 3                            |NULL        |non-numeric argument to binary operator                                                                                               |
+|test-times.R#21       |times() works with matrix        |Testing that the matrix size is 10 for times(1:3, matrix(1:15)) |NULL        |times(1:3, matrix(1:15)) has length 15, not length 10.                                                                                |
+
+
+# Aggregated warnings 
+
+|context      |test                      |expectation |description                                                     |location        |test_time           |message                                                         |
+|:------------|:-------------------------|:-----------|:---------------------------------------------------------------|:---------------|:-------------------|:---------------------------------------------------------------|
+|test-times.R |times() works with matrix |NULL        |Testing that the matrix size is 10 for times(1:3, matrix(1:10)) |test-times.R#19 |2020-07-30 16:56:14 |longer object length is not a multiple of shorter object length |
+# (PART) Appendix {-}
+# How to read this report {-} 
+
+## How to read {testdown} reports {-}
+
+TODO

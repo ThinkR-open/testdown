@@ -1,0 +1,801 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={\{testdown\} report},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{\{testdown\} report}
+\author{}
+\date{\vspace{-2.5em}2020-07-30}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{testdown-report-for-fakepkg}{%
+\chapter*{\texorpdfstring{\texttt{\{testdown\}} Report for \texttt{\{fakepkg\}}}{\{testdown\} Report for \{fakepkg\}}}\label{testdown-report-for-fakepkg}}
+\addcontentsline{toc}{chapter}{\texttt{\{testdown\}} Report for \texttt{\{fakepkg\}}}
+
+\begin{quote}
+Performed on the: 2020-07-30 16:56:15 by Colin
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Project Information:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Project Name} : testdown
+\item
+  \textbf{Environment} : /Users/colin/Seafile/documents\_colin/R/opensource/testdown
+\item
+  \textbf{Number of test files} : 2
+\item
+  \textbf{Total number of tests} : 5
+\item
+  \textbf{Total number of expectations} : 1
+\item
+  \textbf{Total number of successful expectations} : 10
+\item
+  \textbf{Total number of failed expectations} : 6
+\item
+  \textbf{Total number of expectations with warnings} : 6
+\item
+  \textbf{Total number of errored tests} : 1
+\end{itemize}
+
+\textbf{Tested package Information:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Title} : Package made for testing testdown
+\item
+  \textbf{Version} : 0.0.0.9000
+\item
+  \textbf{Description} : Basically just a package with failing tests.
+\end{itemize}
+
+Test session infrastructure
+
+\begin{verbatim}
+## R version 3.6.1 (2019-07-05)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Mojave 10.14.3, RStudio 1.3.938
+## 
+## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
+## 
+## Package version:
+##   askpass_1.1          assertthat_0.2.1     attempt_0.3.1       
+##   backports_1.1.6      base64enc_0.1.3      BH_1.72.0.3         
+##   bookdown_0.18        brew_1.0.6           callr_3.4.3         
+##   cli_2.0.2            clipr_0.7.0          commonmark_1.7      
+##   compiler_3.6.1       covr_3.5.0           crayon_1.3.4        
+##   crosstalk_1.1.0.1    curl_4.3             desc_1.2.0          
+##   devtools_2.3.0       digest_0.6.25        dplyr_0.8.5         
+##   DT_0.12              ellipsis_0.3.0       evaluate_0.14       
+##   fakepkg_0.0.0.9000   fansi_0.4.1          fs_1.4.1            
+##   gh_1.1.0             git2r_0.27.1         glue_1.4.0          
+##   graphics_3.6.1       grDevices_3.6.1      here_0.1            
+##   highr_0.8            htmltools_0.5.0.9000 htmlwidgets_1.5.1   
+##   httr_1.4.1           ini_0.3.1            jsonlite_1.6.1      
+##   knitr_1.28           later_1.0.0          lazyeval_0.2.2      
+##   lifecycle_0.2.0.9000 magrittr_1.5         markdown_1.1        
+##   memoise_1.1.0.9000   methods_3.6.1        mime_0.9            
+##   openssl_1.4.1        packrat_0.5.0        pillar_1.4.4        
+##   pkgbuild_1.0.8       pkgconfig_2.0.3      pkgload_1.0.2       
+##   plogr_0.2.0          praise_1.0.0         prettyunits_1.1.1   
+##   processx_3.4.2       promises_1.1.0       ps_1.3.2            
+##   purrr_0.3.4          R6_2.4.1             rcmdcheck_1.3.3     
+##   Rcpp_1.0.4.6         rematch2_2.1.2       remotes_2.1.1       
+##   rex_1.2.0            rlang_0.4.7          rmarkdown_2.1       
+##   roxygen2_7.1.0       rprojroot_1.3-2      rstudioapi_0.11     
+##   rversions_2.0.1      sessioninfo_1.1.1    stats_3.6.1         
+##   stringi_1.4.6        stringr_1.4.0        sys_3.3             
+##   testdown_0.0.0.9000  testthat_2.3.2       tibble_3.0.1        
+##   tidyr_1.0.3          tidyselect_1.0.0     tinytex_0.22        
+##   tools_3.6.1          usethis_1.6.1        utf8_1.1.4          
+##   utils_3.6.1          vctrs_0.2.4          whisker_0.4         
+##   withr_2.2.0          xfun_0.13            xml2_1.3.2          
+##   xopen_1.0.0          yaml_2.2.1
+\end{verbatim}
+
+\hypertarget{part-results}{%
+\part{Results}\label{part-results}}
+
+\hypertarget{global-results-for-package-fakepkg}{%
+\chapter*{Global results for package fakepkg}\label{global-results-for-package-fakepkg}}
+\addcontentsline{toc}{chapter}{Global results for package fakepkg}
+
+\begin{longtable}[]{@{}lllrrllr@{}}
+\toprule
+\begin{minipage}[b]{0.12\columnwidth}\raggedright
+Test.file\strut
+\end{minipage} & \begin{minipage}[b]{0.23\columnwidth}\raggedright
+Test\strut
+\end{minipage} & \begin{minipage}[b]{0.07\columnwidth}\raggedright
+Date\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedleft
+Num.Expectations\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedleft
+Failed\strut
+\end{minipage} & \begin{minipage}[b]{0.08\columnwidth}\raggedright
+Was.Skipped\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright
+Errored\strut
+\end{minipage} & \begin{minipage}[b]{0.07\columnwidth}\raggedleft
+Time.Spent\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+test-hello-world.R\strut
+\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
+hello\_world() works\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedright
+2020-07-30\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedleft
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedleft
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedleft
+0.371\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+test-hello-world.R\strut
+\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
+hello\_world() works with vectors\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedright
+2020-07-30\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedleft
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedleft
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedleft
+0.208\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+test-times.R\strut
+\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedright
+2020-07-30\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedleft
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedleft
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+TRUE\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedleft
+0.259\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+test-times.R\strut
+\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
+times() works with matrix\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedright
+2020-07-30\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedleft
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedleft
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedleft
+0.174\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+test-times.R\strut
+\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
+times() works with \{agivenpackage\}\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedright
+2020-07-30\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedleft
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedleft
+0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+TRUE\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+FALSE\strut
+\end{minipage} & \begin{minipage}[t]{0.07\columnwidth}\raggedleft
+0.052\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{test-hello-world.r}{%
+\chapter{test-hello-world.R}\label{test-hello-world.r}}
+
+\hypertarget{summary}{%
+\section*{Summary}\label{summary}}
+\addcontentsline{toc}{section}{Summary}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Number of expectations} : 1
+\item
+  \textbf{Number of successful expectations} : 5
+\item
+  \textbf{Number of failed expectations} : 3
+\item
+  \textbf{Number of expectations with warnings} : 0
+\item
+  \textbf{Number of errored tests} : 0
+\end{itemize}
+
+\hypertarget{details}{%
+\section*{Details}\label{details}}
+\addcontentsline{toc}{section}{Details}
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+\begin{minipage}[b]{0.13\columnwidth}\raggedright
+Test\strut
+\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
+Description\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright
+Expectation\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright
+Result\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright
+Location\strut
+\end{minipage} & \begin{minipage}[b]{0.08\columnwidth}\raggedright
+Test\_time\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(``colin'') returns ``Hello world, my name is colin!''\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:13\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(``colin'') returns a character vector\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#5\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(``colin'') has World in it\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+❌ Failure\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#7\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(``colin'') has Hello in it\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#9\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works with vectors\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(``colin'', ``seb'') returns two elements\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+❌ Failure\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#15\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works with vectors\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(c(``colin'', ``seb'')) returns two elements\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#17\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works with vectors\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(LETTERS) returns 25 elements\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+❌ Failure\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#19\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+hello\_world() works with vectors\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Testing that hello\_world(LETTERS) returns 26 elements\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+test-hello-world.R\#21\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{test-times.r}{%
+\chapter{test-times.R}\label{test-times.r}}
+
+\hypertarget{summary-1}{%
+\section*{Summary}\label{summary-1}}
+\addcontentsline{toc}{section}{Summary}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Number of expectations} : 1
+\item
+  \textbf{Number of successful expectations} : 5
+\item
+  \textbf{Number of failed expectations} : 3
+\item
+  \textbf{Number of expectations with warnings} : 1
+\item
+  \textbf{Number of errored tests} : 1
+\end{itemize}
+
+\hypertarget{details-1}{%
+\section*{Details}\label{details-1}}
+\addcontentsline{toc}{section}{Details}
+
+\begin{longtable}[]{@{}lllllll@{}}
+\toprule
+\begin{minipage}[b]{0.01\columnwidth}\raggedright
+\strut
+\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright
+Test\strut
+\end{minipage} & \begin{minipage}[b]{0.25\columnwidth}\raggedright
+Description\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright
+Expectation\strut
+\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright
+Result\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright
+Location\strut
+\end{minipage} & \begin{minipage}[b]{0.08\columnwidth}\raggedright
+Test\_time\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+9\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that times(1, 3) returns 3\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+10\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that times(1, ``2'') fails\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#5\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+11\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that times(1, ``a'') fails\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#7\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+12\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that times(1, 1:10) returns one number\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+❌ Failure\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#9\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+13\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that times(1, 1:10) returns a vector\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+❌ Failure\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#11\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+14\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that times(1, ``3'') returns 3\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+❌ Error (test stopped)\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#13\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+15\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works with matrix\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that the matrix size is 10 for times(1:3, matrix(1:10))\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+⚠️ Warning\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#19\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+16\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works with matrix\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that the matrix size is 10 for times(1:3, matrix(1:10))\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#19\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+17\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works with matrix\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that the matrix size is 10 for times(1:3, matrix(1:15))\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+❌ Failure\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#21\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+18\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works with matrix\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+Testing that the matrix size is 10 for times(1:2, matrix(1:10))\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+✅ Success\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#23\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.01\columnwidth}\raggedright
+19\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+times() works with \{agivenpackage\}\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+🔄 Skipped\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#28\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:15\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{aggregated-failures}{%
+\chapter{Aggregated failures}\label{aggregated-failures}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+\begin{minipage}[b]{0.07\columnwidth}\raggedright
+File\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright
+Test\strut
+\end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\raggedright
+Description\strut
+\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright
+Expectation\strut
+\end{minipage} & \begin{minipage}[b]{0.43\columnwidth}\raggedright
+Message\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.07\columnwidth}\raggedright
+test-hello-world.R\#7\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright
+hello\_world() works\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright
+Testing that hello\_world(``colin'') has World in it\strut
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.43\columnwidth}\raggedright
+hello\_world\("colin"\) does not match ``World''. Actual value: ``Hello world, my name is colin!''\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.07\columnwidth}\raggedright
+test-hello-world.R\#15\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright
+hello\_world() works with vectors\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright
+Testing that hello\_world(``colin'', ``seb'') returns two elements\strut
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.43\columnwidth}\raggedright
+\texttt{hello\_world("colin",\ "seb")} threw an error with unexpected message. Expected match: ``2'' Actual message: ``unused argument ("seb")''\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.07\columnwidth}\raggedright
+test-hello-world.R\#19\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright
+hello\_world() works with vectors\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright
+Testing that hello\_world(LETTERS) returns 25 elements\strut
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.43\columnwidth}\raggedright
+hello\_world(LETTERS) has length 26, not length 25.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.07\columnwidth}\raggedright
+test-times.R\#9\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright
+Testing that times(1, 1:10) returns one number\strut
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.43\columnwidth}\raggedright
+times(1, 1:10) has length 10, not length 1.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.07\columnwidth}\raggedright
+test-times.R\#11\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright
+Testing that times(1, 1:10) returns a vector\strut
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.43\columnwidth}\raggedright
+times(1, 1:10) inherits from \texttt{numeric} not \texttt{vector}.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.07\columnwidth}\raggedright
+test-times.R\#13\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright
+times() works\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright
+Testing that times(1, ``3'') returns 3\strut
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.43\columnwidth}\raggedright
+non-numeric argument to binary operator\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.07\columnwidth}\raggedright
+test-times.R\#21\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright
+times() works with matrix\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright
+Testing that the matrix size is 10 for times(1:3, matrix(1:15))\strut
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.43\columnwidth}\raggedright
+times(1:3, matrix(1:15)) has length 15, not length 10.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{aggregated-warnings}{%
+\chapter{Aggregated warnings}\label{aggregated-warnings}}
+
+\begin{longtable}[]{@{}lllllll@{}}
+\toprule
+\begin{minipage}[b]{0.05\columnwidth}\raggedright
+context\strut
+\end{minipage} & \begin{minipage}[b]{0.10\columnwidth}\raggedright
+test\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright
+expectation\strut
+\end{minipage} & \begin{minipage}[b]{0.24\columnwidth}\raggedright
+description\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright
+location\strut
+\end{minipage} & \begin{minipage}[b]{0.08\columnwidth}\raggedright
+test\_time\strut
+\end{minipage} & \begin{minipage}[b]{0.24\columnwidth}\raggedright
+message\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.05\columnwidth}\raggedright
+test-times.R\strut
+\end{minipage} & \begin{minipage}[t]{0.10\columnwidth}\raggedright
+times() works with matrix\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+NULL\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright
+Testing that the matrix size is 10 for times(1:3, matrix(1:10))\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+test-times.R\#19\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright
+2020-07-30 16:56:14\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright
+longer object length is not a multiple of shorter object length\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{part-appendix}{%
+\part{Appendix}\label{part-appendix}}
+
+\hypertarget{how-to-read-this-report}{%
+\chapter*{How to read this report}\label{how-to-read-this-report}}
+\addcontentsline{toc}{chapter}{How to read this report}
+
+\hypertarget{how-to-read-testdown-reports}{%
+\section*{How to read \{testdown\} reports}\label{how-to-read-testdown-reports}}
+\addcontentsline{toc}{section}{How to read \{testdown\} reports}
+
+TODO
+
+\end{document}

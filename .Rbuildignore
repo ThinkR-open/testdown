@@ -6,6 +6,8 @@
 ^CODE_OF_CONDUCT\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^readmefigs$
+^_docs$
 ^devtoolsstuffs\.R$
 ^readmefigs$
 ^\.gitattributes$

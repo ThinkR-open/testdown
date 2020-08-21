@@ -1,0 +1,15 @@
+Package: fakepkg
+Title: Package made for testing testdown
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Colin",
+           family = "Fay",
+           role = c("aut", "cre"),
+           email = "first.last@example.com")
+Description: Basically just a package with failing tests. 
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat
+RoxygenNote: 7.1.0
