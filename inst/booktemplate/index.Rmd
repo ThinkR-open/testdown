@@ -1,10 +1,9 @@
 --- 
 title: "{testdown} report"
-author: "YYYY"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 biblio-style: apalike
 link-citations: yes
-description: "{testdown} report for package XXXXXX"
+description: "`{testdown}` report for package `{XXXXXX}`"
 ---

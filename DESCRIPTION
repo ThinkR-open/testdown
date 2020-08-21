@@ -1,12 +1,13 @@
 Package: testdown
 Title: 'testhat' Results to Bookdown
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
-    person(given = "Colin",
-           family = "Fay",
-           role = c("cre", "aut"),
-           email = "contact@colinfay.me",
-           comment = structure("0000-0001-7343-1846", .Names = "ORCID"))
+    c(person(given = "Colin",
+             family = "Fay",
+             role = c("cre", "aut"),
+             email = "contact@colinfay.me",
+             comment = c(ORCID = "0000-0001-7343-1846")),
+      person(given = "Institut de Recherches Internationales Servier", role = c("spn")))
 Description: Turn your 'testthat' results a Bookdown.
 License: MIT + file LICENSE
 URL: https://github.com/thinkr-open/testdown
@@ -14,16 +15,27 @@ BugReports: https://github.com/thinkr-open/testdown/issues
 Imports: 
     attempt,
     bookdown,
+    cli,
+    desc,
     devtools,
-    dplyr,
-    glue,
+    fs,
+    here,
     knitr,
+    magrittr,
+    purrr,
     R6,
     rmarkdown,
+    roxygen2,
     stats,
+    tools,
+    utils,
+    withr
+Suggests: 
+    remotes,
+    rlang,
     testthat,
-    tidyr,
-    utils
+    usethis,
+    yaml
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

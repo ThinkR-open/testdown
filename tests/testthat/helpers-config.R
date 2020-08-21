@@ -1,23 +1,9 @@
+cli::cat_rule("Setting config")
 ### lib
 library(withr)
 library(usethis)
 ### Funs
-remove_file <- function(path){
-  if (file.exists(path)) unlink(path, force = TRUE)
-}
-
-remove_files <- function(path, pattern = NULL){
-  fls <- list.files(
-    path, pattern, full.names = TRUE, recursive = TRUE
-  )
-  if (length(fls) >0){
-    res <- lapply(fls, function(x){
-      if (file.exists(x)) unlink(x, force = TRUE)
-    })
-  }
-}
-
-expect_exists <- function(fls) {
+expect_file_exists <- function(fls) {
 
   act <- quasi_label(rlang::enquo(fls), arg = "fls")
 
@@ -30,6 +16,20 @@ expect_exists <- function(fls) {
   invisible(act$val)
 }
 
+expect_path_exists <- function(dir) {
+
+  act <- quasi_label(rlang::enquo(dir), arg = "dir")
+
+  act$val <- dir.exists(dir)
+  expect(
+    isTRUE(act$val),
+    sprintf("dir %s doesn't exist.", dir)
+  )
+
+  invisible(act$val)
+}
+
+
 ## fake package
 fakename <- sprintf(
   "%s%s",
@@ -41,20 +41,19 @@ tpdir <- normalizePath(tempdir())
 unlink(file.path(tpdir,fakename), recursive = TRUE)
 pkg <- file.path(tpdir, fakename)
 usethis::create_package(pkg, open = FALSE)
-browser()
 fs::file_copy(
-  "hello-world.R",
+  system.file("testhelpers/hello-world.R", package = "testdown"),
   fs::path(pkg, "R")
 )
 fs::file_copy(
-  "times.R",
+  system.file("testhelpers/times.R", package = "testdown"),
   fs::path(pkg, "R")
 )
 fs::dir_copy(
-  "tests",
+  system.file("testhelpers/tests", package = "testdown"),
   pkg
 )
 devtools::document(pkg)
-devtools::check(pkg)
-usethis::use_package("testthat")
-usethis::use_package("testdown")
+remotes::install_local(pkg)
+# devtools::check(pkg)
+# usethis::use_package("testthat")
