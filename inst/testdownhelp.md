@@ -30,7 +30,7 @@ To sum up, Test files contains one or more test(s), which contain one or more ex
 
 + &#128260; <font color='blue'>Skip</font>: This expectation has validated a "skip" expectation for the current test.
 
-+ &#128260; <font color='blue'>Was Skipped</font>: The expectation has been skipped, due to a `skip_if` or an error previously in the test. 
++ &#128260; <font color='blue'>Was Skipped</font>: The expectation has been skipped and is reported as a 'skipped expectation', due to a `skip_if` or an error previously in the test. 
 Note that when an expectation is skipped, the Description, and Test time are not retrieved.
 
 ### First page {-}

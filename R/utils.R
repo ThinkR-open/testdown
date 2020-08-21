@@ -188,3 +188,12 @@ na_fill <- function(x) {
   for(i in seq_along(x)[-1]) if(is.na(x[i])) x[i] <- x[i-1]
   x
 }
+
+order_it <- function(table_to_insert){
+  orders <- gsub(
+    ".*#(.*)", "\\1", table_to_insert$location
+  ) %>% as.numeric()
+  table_to_insert[
+    order(orders),
+  ]
+}

@@ -144,55 +144,6 @@ test_down <- function(
   #browser()
   setwd(older)
 
-  write_in <- function(x = "\n", there = book_rmd){
-    write(x, file = there, append = TRUE)
-  }
-  write_in()
-  write_in(paste0("# `{testdown}` report for  `{", meta$package,"}` {-} \n"))
-  if (is.null(author)){
-    write_in(paste("> Performed on the:", Sys.time(),", using {testdown} version",packageVersion("testdown"),"\n"))
-  } else {
-    write_in(paste("> Performed on the:", Sys.time()," by ", author,", using {testdown} version",packageVersion("testdown") ,"\n"))
-  }
-
-  write_in("----\n")
-  write_in("__Project Information:__  \n")
-  write_in(sprintf("+ __Project Name__ : %s\n", meta$project_name))
-  write_in(sprintf("+ __Environment__ : %s\n", here::here()))
-  write_in(sprintf("+ __Number of test file(s)__ : %s\n", length(unique(.tr$df$file))))
-  write_in(sprintf("+ __Total number of tests__ : %s\n", length(unique(.tr$df$test))))
-  write_in(sprintf("+ __Total number of test(s) with error(s)__ : %s\n", sum(.tr$df$result == 'error')))
-  write_in(sprintf("+ __Total number of test(s) with skipped expectations__ : %s\n", sum(.tr$df$result == 'skip')))
-  write_in(sprintf("+ __Total number of expectation(s)__ : %s\n", length(unique(.tr$df$expectation)) + length(were_skipped)))
-  write_in(sprintf("+ __Total number of successful expectation(s)__ : %s\n", sum(.tr$df$result == 'success')))
-  write_in(sprintf("+ __Total number of failed expectation(s)__ : %s\n", sum(.tr$df$result == 'failure')))
-  write_in(sprintf("+ __Total number of expectations with warning(s)__ : %s\n", sum(.tr$df$result == 'warning')))
-  write_in(sprintf("+ __Total number of skipped expectation(s)__ : %s\n", length(were_skipped)))
-  write_in()
-  write_in("__Tested Package Information:__  \n")
-  write_in(sprintf("+ __Title__ : %s", meta$title))
-  write_in(sprintf("+ __Version__ : %s", meta$version))
-  write_in(sprintf("+ __Description__ : %s", meta$description))
-  write_in()
-  write_in("<details><summary>Test session infrastructure</summary>")
-  write_in()
-  write_in("```{r echo = FALSE, comment = ''}")
-  write_in("xfun::session_info()")
-  write_in("```")
-  write_in()
-  write_in("</details>")
-  write_in()
-  write_in()
-  write_in("# (PART) Results {-}")
-
-  write_in(paste("# Global results for package", meta$package,"{-} \n"))
-
-  if (is.null(author)){
-    write_in(paste("> Performed on the:", Sys.time(), "\n"))
-  } else {
-    write_in(paste("> Performed on the:", Sys.time()," by ", author,"\n"))
-  }
-
   a <- do.call(
     rbind,
     lapply(a, summarize_one_test_results)
@@ -207,6 +158,78 @@ test_down <- function(
     were_skipped_df
   )
 
+  write_in <- function(x = "\n", there = book_rmd){
+    write(x, file = there, append = TRUE)
+  }
+  write_in()
+  write_in(paste0("# `{testdown}` report for  `{", meta$package,"}` {-} \n"))
+  if (is.null(author)){
+    write_in(paste("> Performed on the:", Sys.time(),", using {testdown} version",packageVersion("testdown"),"\n"))
+  } else {
+    write_in(paste("> Performed on the:", Sys.time()," by ", author,", using {testdown} version",packageVersion("testdown") ,"\n"))
+  }
+
+  write_in("----\n")
+  write_in()
+  write_in("__Tested Package Information:__  \n")
+  write_in(sprintf("+ __Title__ : %s", meta$title))
+  write_in(sprintf("+ __Version__ : %s", meta$version))
+  write_in(sprintf("+ __Description__ : %s", meta$description))
+  write_in()
+  write_in("----\n")
+  write_in("__Project Information:__  \n")
+  write_in(sprintf("+ __Project Name__ : %s\n", meta$project_name))
+  write_in(sprintf("+ __Environment__ : %s\n", here::here()))
+  write_in(sprintf("+ __Number of test file(s)__ : %s\n", length(unique(.tr$df$file))))
+  write_in("----\n")
+  write_in("__Result Overview:__  \n")
+  write_in(sprintf("+ __Number of test(s)__ : %s\n", length(unique(.tr$df$test))))
+  write_in(sprintf("+ __Number of test(s) with error__ : %s\n", sum(.tr$df$result == 'error')))
+  write_in(sprintf("+ __Number of test(s) with skipped expectation(s)__ : %s\n", sum(.tr$df$result == 'skip')))
+  write_in(sprintf("+ __Number of expectation(s)__ : %s\n", length(.tr$df$expectation)))
+  write_in(sprintf("+ __Number of successful expectation(s)__ : %s\n", sum(.tr$df$result == 'success')))
+  write_in(sprintf("+ __Number of failed expectation(s)__ : %s\n", sum(.tr$df$result == 'failure')))
+  write_in(sprintf("+ __Number of errored expectation(s)__ : %s\n", sum(.tr$df$result == 'error')))
+  write_in(sprintf("+ __Number of expectation(s) with warning(s)__ : %s\n", sum(.tr$df$result == 'warning')))
+  write_in(sprintf("+ __Number of validated skip expectation(s)__ : %s\n",  sum(.tr$df$result %in% c('skip'))))
+  write_in(sprintf("+ __Number of skipped expectation(s)__ : %s\n",  sum(.tr$df$result %in% c('was skipped'))))
+  write_in("----\n")
+  write_in()
+  write_in("__Help:__  \n")
+  write_in()
+  write_in("<details><summary>Test session infrastructure (click to expand)</summary>")
+  write_in()
+  write_in("```{r echo = FALSE, comment = ''}")
+  write_in("xfun::session_info()")
+  write_in("```")
+  write_in()
+  write_in("</details>")
+  write_in()
+  write_in("<details><summary>Glossary (click to expand)</summary>")
+  write_in()
+  write_in("+ A __file__ is one test-*.R  file from the testthat folder.")
+  write_in("+ A __test__ is one function call that starts with `test_that('', `.")
+  write_in("+ A __test with error__ is a `test_that('', ` in which one expectation has returned an error.")
+  write_in("+ A __test with skipped expectations__ is a `test_that('', ` in which one `skip` expectation has been validated.")
+  write_in("+ An __expectation__ is a function call that starts with `expect`.")
+  write_in("+ A __successful expectation__ is an expectation where the test is valid.")
+  write_in("+ A __failed expectation__ is an expectation where the test is invalid.")
+  write_in("+ An __expectation with warning__ is an expectation where the code of the test returned a warning.")
+  write_in("+ An __errored expectation__ is an expectation where the code of the test returned an error (further expectations in the test are not run).")
+  write_in("+ A __validated skip expectation__ is an expectation that starts with `skip`, and which has been validated (further expectations in the test are not run).")
+  write_in("+ A __skipped expectation__ is which has not been run because it comes after an expectation with error or a validated skip expectation in the test.")
+  write_in()
+  write_in("</details>")
+  write_in()
+  write_in("# (PART) Results {-}")
+
+  write_in(paste("# Global results for package", meta$package,"{-} \n"))
+
+  if (is.null(author)){
+    write_in(paste("> Performed on the:", Sys.time(), "\n"))
+  } else {
+    write_in(paste("> Performed on the:", Sys.time()," by ", author,"\n"))
+  }
 
   tests_global <- data.frame(
     check.names = FALSE,
@@ -219,21 +242,27 @@ test_down <- function(
     `Time Spent` = a$real
   )
   write_in(kable(tests_global, row.names = FALSE))
+  write_in()
+  write_in("Note: skipped expectations are not reported in this table")
+  write_in()
 
   # Aggregate results for unsuccessful tests
   #failed <- filter(.tr$df, result %in% c("failure", "error"))
   failed <- .tr$df[.tr$df$result %in% c("failure", "error"), ]
+  failed <- order_it(failed)
   failed$file <- NULL
   failed$result <- NULL
 
 
   # Aggregate warnings for unsuccessful tests
   warnings <- .tr$df[.tr$df$result == "warning", ]
+  warnings <- order_it(warnings)
   warnings$file <- NULL
   warnings$result <- NULL
 
   # Aggregate skipped for unsuccessful tests
-  skipped <- .tr$df[.tr$df$result %in% c("skip", "was skipped"), ]
+  skipped <- .tr$df[.tr$df$result %in% c("skip", "error", "was skipped"), ]
+  skipped <- order_it(skipped)
   skipped$file <- NULL
   skipped$result <- NULL
 
@@ -251,11 +280,13 @@ test_down <- function(
     write_in(sprintf("+ __Number of test(s)__ : %s\n", length(unique(table_to_insert$test))))
     write_in(sprintf("+ __Number of test(s) with error__ : %s\n", sum(table_to_insert$result == 'error')))
     write_in(sprintf("+ __Number of test(s) with skipped expectations__ : %s\n", sum(table_to_insert$result == 'skip')))
-    write_in(sprintf("+ __Number of expectation(s)__ : %s\n", length(unique(table_to_insert$expectation))))
+    write_in(sprintf("+ __Number of expectation(s)__ : %s\n", length(table_to_insert$expectation)))
     write_in(sprintf("+ __Number of successful expectation(s)__ : %s\n", sum(table_to_insert$result == 'success')))
     write_in(sprintf("+ __Number of failed expectation(s)__ : %s\n", sum(table_to_insert$result == 'failure')))
+    write_in(sprintf("+ __Number of errored expectation(s)__ : %s\n", sum(table_to_insert$result == 'error')))
     write_in(sprintf("+ __Number of expectations with warning(s)__ : %s\n", sum(table_to_insert$result == 'warning')))
-    write_in(sprintf("+ __Number of skipped expectation(s)__ : %s\n", sum(table_to_insert$result == "was skipped")))
+    write_in(sprintf("+ __Number of validated skip expectation(s)__ : %s\n", sum(table_to_insert$result == 'skip')))
+    write_in(sprintf("+ __Number of skipped expectation(s)__ : %s\n", sum(table_to_insert$result %in% c("was skipped"))))
 
     table_to_insert$context <- NULL
     table_to_insert$message <- NULL
@@ -319,7 +350,9 @@ test_down <- function(
 
 
   write_in("# Aggregated failures and errors {-}\n")
-
+  write_in()
+  write_in("> The expectation has not been validated, or an error was thrown")
+  write_in()
   if (nrow(failed)){
     failed <- failed[, c("location", "test", "description", "expectation", "message")] %>%
       setNames(
@@ -341,6 +374,9 @@ test_down <- function(
 
   write_in()
   write_in("# Aggregated warnings {-}\n")
+  write_in()
+  write_in("> A warning was thrown by these expectations.")
+  write_in()
   if (nrow(warnings)){
     warnings <- warnings[, c("location", "test", "description", "expectation", "message")] %>%
       setNames(
@@ -359,12 +395,15 @@ test_down <- function(
   }
 
   write_in("# Aggregated skipped {-}\n")
-
+  write_in()
+  write_in("> These expectations are either validated skip expectations, have thrown an error, or they come after a validated skip expectations or an error and then were not run.")
+  write_in()
   if (nrow(skipped)){
     skipped <- skipped[, c("location", "test", "description", "expectation", "message")] %>%
       setNames(
         c("Location", "Test", "Description", "Expectation", "Message")
       )
+    skipped$test <- na_fill(skipped$test)
     write_in(
       kable(
         row.names = FALSE,
@@ -403,7 +442,20 @@ test_down <- function(
   if (open){
     browseURL(res)
   }
-
+  fs::file_create(
+    fs::path(
+      dirname(res),
+      "index.html"
+    )
+  )
+  write(
+    file = fs::path(
+      dirname(res),
+      "index.html"
+    ),
+    sprintf('<head><meta http-equiv="refresh" content="0; URL=%s" /></head>', basename(res))
+  )
+  #browser()
   fs::file_delete(
     fs::path(
       pkg,
