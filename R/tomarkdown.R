@@ -26,7 +26,8 @@ test_down <- function(
   with_help = TRUE,
   open = interactive()
 ){
-
+  #browser()
+  book_path <- fs::path_abs(book_path)
   old_wd <- setwd(
     normalizePath(pkg)
   )
@@ -37,7 +38,6 @@ test_down <- function(
   )
 
   book_rmd <- fs::path(
-    pkg,
     book_path,
     "index.Rmd"
   )
@@ -52,12 +52,7 @@ test_down <- function(
     meta$project_name <- project_name
   }
 
-  output_folder <- fs::path_abs(
-    fs::path(
-      pkg,
-      book_path
-    )
-  )
+  output_folder <- fs::path_abs(book_path)
 
   if (dir.exists(output_folder)){
     fs::dir_delete(output_folder)
@@ -141,7 +136,7 @@ test_down <- function(
     message = "NA (was skipped)"
   )
 
-  #browser()
+  #
   setwd(older)
 
   a <- do.call(
@@ -149,14 +144,21 @@ test_down <- function(
     lapply(a, summarize_one_test_results)
   )
 
-  #names(.tr$df)
-  #
+
 
   .tr$df$test_time <- as.character(.tr$df$test_time)
   .tr$df <- rbind(
     .tr$df,
     were_skipped_df
   )
+
+  .tr$df <- split(.tr$df, .tr$df$context)
+  .tr$df <- purrr::map_df(
+    .tr$df, function(x){
+      order_it(x)
+    }
+  )
+  .tr$df$test <- na_fill(.tr$df$test)
 
   write_in <- function(x = "\n", there = book_rmd){
     write(x, file = there, append = TRUE)
@@ -184,8 +186,8 @@ test_down <- function(
   write_in("----\n")
   write_in("__Result Overview:__  \n")
   write_in(sprintf("+ __Number of test(s)__ : %s\n", length(unique(na.omit(.tr$df$test)))))
-  write_in(sprintf("+ __Number of test(s) with error__ : %s\n", sum(.tr$df$result == 'error')))
-  write_in(sprintf("+ __Number of test(s) with skipped expectation(s)__ : %s\n", sum(.tr$df$result == 'skip')))
+  # write_in(sprintf("+ __Number of test(s) with error__ : %s\n", sum(.tr$df$result == 'error')))
+  # write_in(sprintf("+ __Number of test(s) with skipped expectation(s)__ : %s\n", sum(.tr$df$result == 'skip')))
   write_in(sprintf("+ __Number of expectation(s)__ : %s\n", length(.tr$df$expectation)))
   write_in(sprintf("+ __Number of successful expectation(s)__ : %s\n", sum(.tr$df$result == 'success')))
   write_in(sprintf("+ __Number of failed expectation(s)__ : %s\n", sum(.tr$df$result == 'failure')))
@@ -231,38 +233,36 @@ test_down <- function(
     write_in(paste("> Performed on the:", Sys.time()," by ", author,"\n"))
   }
 
+
   tests_global <- data.frame(
     check.names = FALSE,
     stringsAsFactors = FALSE,
     "File" = sprintf("<a href='%s'>%s</a>", enurl(a$file), a$file),
     `Test` = a$test,
-    `Expectations` = a$nb,
+    `Expectations` = table(.tr$df$test)[a$test],
     Result = ifelse(a$failed | a$error, "&#10060;", "&#9989;"),
     `Was Skipped` = a$skipped,
     `Time Spent` = a$real
   )
   write_in(kable(tests_global, row.names = FALSE))
-  write_in()
-  write_in("Note: skipped expectations are not reported in this table")
-  write_in()
 
   # Aggregate results for unsuccessful tests
   #failed <- filter(.tr$df, result %in% c("failure", "error"))
   failed <- .tr$df[.tr$df$result %in% c("failure", "error"), ]
-  failed <- order_it(failed)
+ # failed <- order_it(failed)
   failed$file <- NULL
   failed$result <- NULL
 
 
   # Aggregate warnings for unsuccessful tests
   warnings <- .tr$df[.tr$df$result == "warning", ]
-  warnings <- order_it(warnings)
+  #warnings <- order_it(warnings)
   warnings$file <- NULL
   warnings$result <- NULL
 
   # Aggregate skipped for unsuccessful tests
   skipped <- .tr$df[.tr$df$result %in% c("skip", "error", "was skipped"), ]
-  skipped <- order_it(skipped)
+  #skipped <- order_it(skipped)
   skipped$file <- NULL
   skipped$result <- NULL
 
@@ -278,8 +278,8 @@ test_down <- function(
     write_in("\n")
     write_in("## Summary {-}")
     write_in(sprintf("+ __Number of test(s)__ : %s\n", length(unique(na.omit(table_to_insert$test)))))
-    write_in(sprintf("+ __Number of test(s) with error__ : %s\n", sum(table_to_insert$result == 'error')))
-    write_in(sprintf("+ __Number of test(s) with skipped expectations__ : %s\n", sum(table_to_insert$result == 'skip')))
+    # write_in(sprintf("+ __Number of test(s) with error__ : %s\n", sum(table_to_insert$result == 'error')))
+    # write_in(sprintf("+ __Number of test(s) with skipped expectations__ : %s\n", sum(table_to_insert$result == 'skip')))
     write_in(sprintf("+ __Number of expectation(s)__ : %s\n", length(table_to_insert$expectation)))
     write_in(sprintf("+ __Number of successful expectation(s)__ : %s\n", sum(table_to_insert$result == 'success')))
     write_in(sprintf("+ __Number of failed expectation(s)__ : %s\n", sum(table_to_insert$result == 'failure')))
@@ -431,12 +431,9 @@ test_down <- function(
     write_in()
   }
 
+  #browser()
   res <- render(
-    file.path(
-      pkg,
-      book_path,
-      "index.Rmd"
-    )
+    book_rmd
   )
   #knit(file.path(pkg, "tests/testdown", "index.Rmd"))
   if (open){
@@ -457,11 +454,7 @@ test_down <- function(
   )
   #browser()
   fs::file_delete(
-    fs::path(
-      pkg,
-      book_path,
-      "index.Rmd"
-    )
+    book_rmd
   )
   res
 }
