@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-09-02" />
+<meta name="date" content="2020-09-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -129,6 +129,20 @@
 <td align="left">hello_world<span class="math inline">\(&quot;colin&quot;\)</span> does not match “World”. Actual value: “Hello world, my name is colin!”</td>
 </tr>
 <tr class="even">
+<td align="left">test-hello-world.R#15</td>
+<td align="left">hello_world() works with vectors</td>
+<td align="left">Testing that hello_world(“colin”, “seb”) returns two elements</td>
+<td align="left">expect_error(hello_world(“colin”, “seb”), 2)</td>
+<td align="left"><code>hello_world("colin", "seb")</code> threw an error with unexpected message. Expected match: “2” Actual message: “unused argument ("seb")”</td>
+</tr>
+<tr class="odd">
+<td align="left">test-hello-world.R#19</td>
+<td align="left">hello_world() works with vectors</td>
+<td align="left">Testing that hello_world(LETTERS) returns 25 elements</td>
+<td align="left">expect_length(hello_world(LETTERS), 25)</td>
+<td align="left">hello_world(LETTERS) has length 26, not length 25.</td>
+</tr>
+<tr class="even">
 <td align="left">test-times.R#9</td>
 <td align="left">times() works</td>
 <td align="left">Testing that times(1, 1:10) returns one number</td>
@@ -148,20 +162,6 @@
 <td align="left">Testing that times(1, “3”) returns 3</td>
 <td align="left">expect_equal(times(1, “3”), 3)</td>
 <td align="left">non-numeric argument to binary operator</td>
-</tr>
-<tr class="odd">
-<td align="left">test-hello-world.R#15</td>
-<td align="left">hello_world() works with vectors</td>
-<td align="left">Testing that hello_world(“colin”, “seb”) returns two elements</td>
-<td align="left">expect_error(hello_world(“colin”, “seb”), 2)</td>
-<td align="left"><code>hello_world("colin", "seb")</code> threw an error with unexpected message. Expected match: “2” Actual message: “unused argument ("seb")”</td>
-</tr>
-<tr class="even">
-<td align="left">test-hello-world.R#19</td>
-<td align="left">hello_world() works with vectors</td>
-<td align="left">Testing that hello_world(LETTERS) returns 25 elements</td>
-<td align="left">expect_length(hello_world(LETTERS), 25)</td>
-<td align="left">hello_world(LETTERS) has length 26, not length 25.</td>
 </tr>
 <tr class="odd">
 <td align="left">test-times.R#23</td>

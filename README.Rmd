@@ -81,7 +81,7 @@ test_that("hello_world() works", {
 })
 ```
 
-```{r child = "inst/testdownhelp.md"}
+```{r child = "inst/testdownhelp.md", eval = TRUE}
 
 ```
 
