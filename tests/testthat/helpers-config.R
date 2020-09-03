@@ -54,6 +54,6 @@ fs::dir_copy(
   pkg
 )
 devtools::document(pkg)
-remotes::install_local(pkg)
+#remotes::install_local(pkg)
 # devtools::check(pkg)
 # usethis::use_package("testthat")

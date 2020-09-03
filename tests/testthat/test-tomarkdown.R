@@ -1,4 +1,5 @@
 test_that("testdown works", {
+  oldir <- setwd(pkg)
   res <- test_down(
     project_name = "testthat testdown",
     author = "Colin Fay",
@@ -9,6 +10,7 @@ test_that("testdown works", {
   expect_path_exists(
     dirname(res)
   )
+  setwd(oldir)
 })
 
 
@@ -24,6 +26,7 @@ test_that("Files exist", {
 })
 
 test_that("Configs are correct", {
+  #browser()
   oldir <- setwd(pkg)
   font_m <- yaml::read_yaml(
     "tests/testdown/_bookdown.yml"
