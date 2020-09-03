@@ -5,7 +5,8 @@
 #'
 #' @param project_name The name you want to give to the project. The default is `NULL`, which will be then be converted to `basename(here::here())`.
 #' @param author The author of the test report. Default is set to `NULL`, then it will be skipped.
-#' @param pkg The path to the package to document. Default is `here::here()`
+#' @param pkg The path to the package to document. Default is `here::here()`.
+#' @param environment A name for the testing environment. Default is `here::here()`.
 #' @param book_path The path to the bookdown output. Default is `"tests/testdown"`.
 #' @param with_help Should the help appendix be added? Default is `TRUE`.
 #' @param open Should the bookdown be opened once compiled? Default is `interactive()`.
@@ -22,6 +23,7 @@ test_down <- function(
   project_name = NULL,
   author = NULL,
   pkg = here::here(),
+  environment = here::here(),
   book_path = "tests/testdown",
   with_help = TRUE,
   open = interactive()
@@ -181,7 +183,7 @@ test_down <- function(
   write_in("----\n")
   write_in("__Project Information:__  \n")
   write_in(sprintf("+ __Project Name__ : %s\n", meta$project_name))
-  write_in(sprintf("+ __Environment__ : %s\n", here::here()))
+  write_in(sprintf("+ __Environment__ : %s\n", environment))
   write_in(sprintf("+ __Number of test file(s)__ : %s\n", length(unique(.tr$df$file))))
   write_in("----\n")
   write_in("__Result Overview:__  \n")
