@@ -7,6 +7,7 @@
 test_down_example(
   project_name = NULL,
   author = NULL,
+  environment = here::here(),
   book_path = "tests/testdown",
   with_help = TRUE,
   open = interactive()
@@ -16,6 +17,8 @@ test_down_example(
 \item{project_name}{The name you want to give to the project. The default is `NULL`, which will be then be converted to `basename(here::here())`.}
 
 \item{author}{The author of the test report. Default is set to `NULL`, then it will be skipped.}
+
+\item{environment}{A name for the testing environment. Default is `here::here()`.}
 
 \item{book_path}{The path to the bookdown output. Default is `"tests/testdown"`.}
 

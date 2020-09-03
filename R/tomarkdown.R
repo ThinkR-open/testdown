@@ -16,7 +16,7 @@
 #' @importFrom devtools as.package test
 #' @importFrom knitr kable knit
 #' @importFrom rmarkdown render
-#' @importFrom stats setNames
+#' @importFrom stats setNames na.omit
 #' @importFrom utils browseURL packageVersion
 #' @importFrom magrittr %>%
 test_down <- function(
@@ -28,8 +28,10 @@ test_down <- function(
   with_help = TRUE,
   open = interactive()
 ){
+
   #browser()
   book_path <- fs::path_abs(book_path)
+
   old_wd <- setwd(
     normalizePath(pkg)
   )
@@ -46,7 +48,7 @@ test_down <- function(
 
   .tr$df <- empty_tr()
 
-  meta <- as.package(".")
+  meta <- as.package(pkg)
 
   if (is.null(project_name)){
     meta$project_name <- basename(here::here())
@@ -54,23 +56,21 @@ test_down <- function(
     meta$project_name <- project_name
   }
 
-  output_folder <- fs::path_abs(book_path)
-
-  if (dir.exists(output_folder)){
-    fs::dir_delete(output_folder)
+  if (dir.exists(book_path)){
+    fs::dir_delete(book_path)
   }
-  fs::dir_create(output_folder)
+  fs::dir_create(book_path)
 
   fs::file_copy(
     fs::dir_ls(
       system.file("booktemplate/", package = "testdown")
     ),
-    output_folder,
+    book_path,
     overwrite = TRUE
   )
 
   replace_in_file(
-    fs::path(pkg, "tests/testdown", "_bookdown.yml"),
+    fs::path(book_path, "_bookdown.yml"),
     "teeest",
     meta$package
   )
@@ -111,32 +111,49 @@ test_down <- function(
   #get_desc()
   #all_tests_description <- lapply(as.character(all_tests), readLines)
   #were_skipped_description <-
-
-  were_skipped_df <- data.frame(
-    row.names = NULL,
-    stringsAsFactors = FALSE,
-    context = gsub(
-      "(.*)#.*",
-      "\\1",
-      basename(
+  #browser()
+  if (is.null(nrow(were_skipped))){
+    were_skipped_df <- data.frame(
+      row.names = NULL,
+      stringsAsFactors = FALSE,
+      context = character(0),
+      test = character(0),
+      expectation = character(0),
+      description = character(0),
+      location = character(0),
+      test_time = character(0),
+      result  = character(0),
+      file =  character(0),
+      message = character(0)
+    )
+  } else {
+    were_skipped_df <- data.frame(
+      row.names = NULL,
+      stringsAsFactors = FALSE,
+      context = gsub(
+        "(.*)#.*",
+        "\\1",
+        basename(
+          names(were_skipped)
+        )
+      ),
+      test = NA,
+      expectation = were_skipped,
+      description = "NA (was skipped)",
+      location = basename(
         names(were_skipped)
-      )
-    ),
-    test = NA,
-    expectation = were_skipped,
-    description = "NA (was skipped)",
-    location = basename(
-      names(were_skipped)
-    ),
-    test_time = "NA (was skipped)",
-    result  = "was skipped",
-    file =  gsub(
-      "(.*)#.*",
-      "\\1",
-      names(were_skipped)
-    ),
-    message = "NA (was skipped)"
-  )
+      ),
+      test_time = "NA (was skipped)",
+      result  = "was skipped",
+      file =  gsub(
+        "(.*)#.*",
+        "\\1",
+        names(were_skipped)
+      ),
+      message = "NA (was skipped)"
+    )
+  }
+
 
   #
   setwd(older)
