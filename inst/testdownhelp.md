@@ -39,18 +39,22 @@ The index offers a summary of:
 
 + When the tests were run
 
++ The package (Title, Version, and Description of the package)
+
 + The project
   + Name of the project
   + Environment the tests were run into (aka the directory)
   + Details about the test results
 
-+ The package (Title, Version, and Description of the package)
++ Results overview
 
 + The testing infrastructure
   + R version
   + Operating system
   + Locale
   + Package versions
+
++ Glossary of terms
 
 
 ### Global results {-}
@@ -61,7 +65,7 @@ Details of the table:
 
 + File: Name of the file that contains the test. This column is clickable and will open the corresponding page.
 
-+ Test: Name given to the test.
++ Test: Label given to the test.
 
 + Expectations: Number of expectations contained in the test.
 
