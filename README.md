@@ -36,6 +36,8 @@ It takes:
     Default is NULL, and then the report won’t have any name on it.
 -   `pkg`, the path to the package that will be documented. Default is
     `here::here()`
+-   `environment`, a name for the testing environment. Default is
+    `here::here()`
 -   `book_path`, the folder where you want the `{bookdown}` report to be
     created. Default is `"tests/testdown"`.
 -   `with_help` Should the help appendix be added? Default is `TRUE`.
