@@ -29,6 +29,7 @@ test_that("times() works with {agivenpackage}", {
   #' @description Testing that the length of iris is 5
   expect_length(iris, 5)
   # Example of a skipped test
+  #' @description Skipping if {agivenpackage} is not installed
   skip_if_not_installed("agivenpackage")
   #' @description Testing that times works with agivenpackage
   res <- agivenpackage::fun(times(1, 3))
