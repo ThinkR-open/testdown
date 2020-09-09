@@ -1,6 +1,7 @@
 usethis::use_build_ignore("devtoolsstuffs.R")
 usethis::use_build_ignore("readmefigs/")
 usethis::use_build_ignore(".gitattributes")
+usethis::use_build_ignore("reference")
 
 library(usethis)
 library(desc)
@@ -41,6 +42,9 @@ usethis::use_vignette("try-testdown")
 # Test that
 usethis::use_testthat()
 usethis::use_test("test_down")
+
+# CI
+usethis::use_github_action_check_standard()
 
 # Get the dependencies
 use_package("attempt")
