@@ -91,7 +91,7 @@ write_global_results <- function(
     "File" = sprintf("<a href='%s'>%s</a>", enurl(a$file), a$file),
     `Test` = a$test,
     `Expectations` = tst,
-    Result = ifelse(a$failed | a$error | a$warning, "<span title='The test contains one or more error(s), failed expectation(s), or warning(s)'>&#10060;</span>", "<span title='No error, failed expectation, or warning'>&#9989;</span>"),
+    Result = ifelse(a$failed | a$error | a$warning, "<span title='The test contains one or more error(s), failed expectation(s), or warning(s).'>&#10060;</span>", "<span title='No error, failed expectation, or warning.'>&#9989;</span>"),
     #`Was Skipped` = a$skipped,
     `Time Spent` = a$real
   )
@@ -148,7 +148,7 @@ write_parts <- function(
     )
     table_to_insert$result <- gsub(
       "warning",
-      "<span title='The code of this expectation returned a warning'>&#9888;&#65039; <font color='orange'>Warning</font></span>",
+      "<span title='The code of this expectation returned a warning.'>&#9888;&#65039; <font color='orange'>Warning</font></span>",
       table_to_insert$result
     )
     table_to_insert <- table_to_insert[
