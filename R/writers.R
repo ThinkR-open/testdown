@@ -52,15 +52,15 @@ write_first_page <- function(
   write_in()
   write_in("+ A __file__ is one test-*.R  file from the testthat folder.")
   write_in("+ A __test__ is one function call that starts with `test_that('', `.")
-  write_in("+ A __test with error__ is a `test_that('', ` in which one expectation has returned an error.")
-  write_in("+ A __test with skipped expectations__ is a `test_that('', ` in which one `skip` expectation has been validated.")
+  #write_in("+ A __test with error__ is a `test_that('', ` in which one expectation has returned an error.")
+  #write_in("+ A __test with skipped expectations__ is a `test_that('', ` in which one `skip` expectation has been validated.")
   write_in("+ An __expectation__ is a function call that starts with `expect`.")
   write_in("+ A __successful expectation__ is an expectation where the test is valid.")
   write_in("+ A __failed expectation__ is an expectation where the test is invalid.")
   write_in("+ An __expectation with warning__ is an expectation where the code of the test returned a warning.")
   write_in("+ An __errored expectation__ is an expectation where the code of the test returned an error (further expectations in the test are not run).")
   write_in("+ A __validated skip expectation__ is an expectation that starts with `skip`, and which has been validated (further expectations in the test are not run).")
-  write_in("+ A __skipped expectation__ is which has not been run because it comes after an expectation with error or a validated skip expectation in the test.")
+  write_in("+ A __skipped expectation__ is an expectation which has not been run because it comes after an expectation with error or a validated skip expectation in the test.")
   write_in()
   write_in("</details>")
   write_in()
@@ -81,15 +81,18 @@ write_global_results <- function(
     write_in(paste("> Performed on the:", Sys.time()," by ", author,"\n"))
   }
 
+  #browser()
+
+  tst <- as.numeric(table(.tr$df$test)[a$test])
 
   tests_global <- data.frame(
     check.names = FALSE,
     stringsAsFactors = FALSE,
     "File" = sprintf("<a href='%s'>%s</a>", enurl(a$file), a$file),
     `Test` = a$test,
-    `Expectations` = table(.tr$df$test)[a$test],
-    Result = ifelse(a$failed | a$error, "&#10060;", "&#9989;"),
-    `Was Skipped` = a$skipped,
+    `Expectations` = tst,
+    Result = ifelse(a$failed | a$error | a$warning, "<span title='The test contains one or more error(s), failed expectation(s), or warning(s)'>&#10060;</span>", "<span title='No error, failed expectation, or warning'>&#9989;</span>"),
+    #`Was Skipped` = a$skipped,
     `Time Spent` = a$real
   )
   write_in(kable(tests_global, row.names = FALSE))
@@ -120,32 +123,32 @@ write_parts <- function(
     table_to_insert$message <- NULL
     table_to_insert$result <- gsub(
       "success",
-      "&#9989; <font color='green'>Success</font>",
+      "<span title='This expectation is successful.'>&#9989; <font color='green'>Success</font></span>",
       table_to_insert$result
     )
     table_to_insert$result <- gsub(
       "failure",
-      "&#10060; <font color='red'>Failure</font>",
+      "<span title='This expectation is not successful.'>&#10060; <font color='red'>Failure</font></span>",
       table_to_insert$result
     )
     table_to_insert$result <- gsub(
       "error",
-      "&#10060; <font color='red'>Error (test stopped)</font>",
+      "<span title='The code of this expectation returned an error.'>&#10060; <font color='red'>Error (test stopped)</font></span>",
       table_to_insert$result
     )
     table_to_insert$result <- gsub(
       "^skip$",
-      "&#128260; <font color='blue'>Skip</font>",
+      "<span title='This expectation is a skip expectation, and it was validated.'>&#128260; <font color='blue'>Validated skip</font></span>",
       table_to_insert$result
     )
     table_to_insert$result <- gsub(
       "^was skipped$",
-      "&#128260; <font color='blue'>Was Skipped</font>",
+      "<span title='This expectation was not run, either because it comes after a validated skip or after an expectation that throw an error.'>&#128260; <font color='blue'>Skipped</font></span>",
       table_to_insert$result
     )
     table_to_insert$result <- gsub(
       "warning",
-      "&#9888;&#65039; <font color='orange'>Warning</font>",
+      "<span title='The code of this expectation returned a warning'>&#9888;&#65039; <font color='orange'>Warning</font></span>",
       table_to_insert$result
     )
     table_to_insert <- table_to_insert[
@@ -192,13 +195,13 @@ write_aggregated <- function(
   warnings$result <- NULL
 
   # Aggregate skipped for unsuccessful tests
-  skipped <- .tr$df[.tr$df$result %in% c("skip", "error", "was skipped"), ]
+  skipped <- .tr$df[.tr$df$result %in% c("skip", "was skipped"), ]
   skipped$file <- NULL
   skipped$result <- NULL
 
   write_in("# Aggregated failures and errors {-}\n")
   write_in()
-  write_in("> The expectation has not been validated, or an error was thrown")
+  write_in("> The expectation has not been validated, or the code has generated an error.")
   write_in()
   if (nrow(failed)){
     failed <- failed[, c("location", "test", "description", "expectation", "message")] %>%
@@ -241,7 +244,7 @@ write_aggregated <- function(
 
   write_in("# Aggregated skipped {-}\n")
   write_in()
-  write_in("> These expectations are either validated skip expectations, have thrown an error, or they come after a validated skip expectations or an error and then were not run.")
+  write_in("> These expectations are either validated skip expectations, or they come after a validated skip expectations or an error and were not run.")
   write_in()
   if (nrow(skipped)){
     skipped <- skipped[, c("location", "test", "description", "expectation", "message")] %>%
