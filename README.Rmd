@@ -12,14 +12,19 @@ knitr::opts_chunk$set(
   out.width = "100%", 
   eval = FALSE
 )
+# Copy reference/images to man/images
+# reference folder is required to work with pkgdown
+if (!dir.exists("man/figures")) {dir.create("man/figures")}
+file.copy(list.files("reference/figures", full.names = TRUE),
+          "man/figures", overwrite = TRUE)
 ```
+
+# testdown <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R build status](https://github.com/ThinkR-open/testdown/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/testdown/actions)
 <!-- badges: end -->
-
-
-# `{testdown}`
 
 The goal of `{testdown}` is to generate a bookdown report of `{testthat}` results
 
@@ -160,7 +165,7 @@ expect_match(
 
 The development of this package has been sponsored by: 
 
-<a href = "https://www.servier.fr/"><img src = "readmefigs/servier.png"></img></a>
+<a href = "https://www.servier.fr/"><img src = "man/figures/servier.png"></img></a>
 
 
 

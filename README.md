@@ -1,13 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+testdown <img src="man/figures/logo.png" align="right" alt="" width="120" />
+============================================================================
+
 <!-- badges: start -->
 
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R build
+status](https://github.com/ThinkR-open/testdown/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/testdown/actions)
 <!-- badges: end -->
-
-`{testdown}`
-============
 
 The goal of `{testdown}` is to generate a bookdown report of
 `{testthat}` results
@@ -297,7 +300,7 @@ Sponsor
 
 The development of this package has been sponsored by:
 
-<a href = "https://www.servier.fr/"><img src = "readmefigs/servier.png"></img></a>
+<a href = "https://www.servier.fr/"><img src = "man/figures/servier.png"></img></a>
 
 CoC
 ---

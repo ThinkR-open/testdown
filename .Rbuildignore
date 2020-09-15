@@ -12,3 +12,5 @@
 ^devtoolsstuffs\.R$
 ^readmefigs$
 ^\.gitattributes$
+^reference$
+^\.github$
