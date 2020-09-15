@@ -1,4 +1,4 @@
-book_filename: "teeest"
+book_filename: "fakepkg"
 delete_merged_file: true
 language:
   ui:

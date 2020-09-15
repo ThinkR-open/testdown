@@ -161,10 +161,8 @@ Details of the table:
 
 -   Expectations: Number of expectations contained in the test.
 
--   Result: If the test contains at least one error or failed
-    expectation ❌, otherwise ✅.
-
--   Was skipped: Whether this test contains a skipped part or not.
+-   Result: If the test contains one or more error(s), failed
+    expectation(s), or warning(s) ❌, otherwise ✅.
 
 -   Time spent: Time spent on this particular test.
 

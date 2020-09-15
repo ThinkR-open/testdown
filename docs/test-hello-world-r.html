@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-09-03" />
+<meta name="date" content="2020-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -117,12 +117,12 @@
 <h2>Details</h2>
 <table>
 <colgroup>
-<col width="12%" />
-<col width="28%" />
-<col width="26%" />
-<col width="16%" />
-<col width="8%" />
-<col width="7%" />
+<col width="10%" />
+<col width="23%" />
+<col width="21%" />
+<col width="31%" />
+<col width="6%" />
+<col width="6%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -139,65 +139,65 @@
 <td align="left">hello_world() works</td>
 <td align="left">Testing that hello_world(“colin”) returns “Hello world, my name is colin!”</td>
 <td align="left">expect_equal(hello_world(“colin”), “Hello world, my name is colin!”)</td>
-<td align="left">✅ <font color='green'>Success</font></td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#3</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works</td>
 <td align="left">Testing that hello_world(“colin”) returns a character vector</td>
 <td align="left">expect_is(hello_world(“colin”), “character”)</td>
-<td align="left">✅ <font color='green'>Success</font></td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#5</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 <tr class="odd">
 <td align="left">hello_world() works</td>
 <td align="left">Testing that hello_world(“colin”) has World in it</td>
 <td align="left">expect_match(hello_world(“colin”), “World”)</td>
-<td align="left">❌ <font color='red'>Failure</font></td>
+<td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-hello-world.R#7</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works</td>
 <td align="left">Testing that hello_world(“colin”) has Hello in it</td>
 <td align="left">expect_match(hello_world(“colin”), “Hello”)</td>
-<td align="left">✅ <font color='green'>Success</font></td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#9</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 <tr class="odd">
 <td align="left">hello_world() works with vectors</td>
 <td align="left">Testing that hello_world(“colin”, “seb”) returns two elements</td>
 <td align="left">expect_error(hello_world(“colin”, “seb”), 2)</td>
-<td align="left">❌ <font color='red'>Failure</font></td>
+<td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-hello-world.R#15</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works with vectors</td>
 <td align="left">Testing that hello_world(c(“colin”, “seb”)) returns two elements</td>
 <td align="left">expect_length(hello_world(c(“colin”, “seb”)), 2)</td>
-<td align="left">✅ <font color='green'>Success</font></td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#17</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 <tr class="odd">
 <td align="left">hello_world() works with vectors</td>
 <td align="left">Testing that hello_world(LETTERS) returns 25 elements</td>
 <td align="left">expect_length(hello_world(LETTERS), 25)</td>
-<td align="left">❌ <font color='red'>Failure</font></td>
+<td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-hello-world.R#19</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works with vectors</td>
 <td align="left">Testing that hello_world(LETTERS) returns 26 elements</td>
 <td align="left">expect_length(hello_world(LETTERS), 26)</td>
-<td align="left">✅ <font color='green'>Success</font></td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#21</td>
-<td align="left">2020-09-03 10:46:48</td>
+<td align="left">2020-09-15 10:55:47</td>
 </tr>
 </tbody>
 </table>
