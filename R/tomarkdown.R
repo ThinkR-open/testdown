@@ -37,13 +37,13 @@ test_down <- function(
   )
 
   # Checking for context()
-  old_wd <- setwd(
-    fs::path(
-      normalizePath(pkg), "tests/testthat"
-    )
-  )
-
-  all_tests <- list.files(pattern = "*\\.R$")
+  # old_wd <- setwd(
+  #   fs::path(
+  #     normalizePath(pkg), "tests/testthat"
+  #   )
+  # )
+  test_path <- fs::path(normalizePath(pkg), "tests/testthat")
+  all_tests <- list.files(test_path, pattern = "*\\.R$", full.names = TRUE)
   all_tests_read <- unlist(lapply(as.character(all_tests), readLines))
 
   attempt::stop_if_any(
@@ -52,12 +52,12 @@ test_down <- function(
     "Stopping `test_down()`. The use of `context()` in tests is disallowed when using `{testdown}` and has been deprecated in recent version of `{testthat}`.\nPlease remove them from your test files."
   )
 
-  #browser()
-  book_path <- fs::path_abs(book_path)
+  # browser()
+  # old_wd <- setwd(
+  #   normalizePath(pkg)
+  # )
 
-  old_wd <- setwd(
-    normalizePath(pkg)
-  )
+  book_path <- fs::path_abs(book_path)
 
   book_rmd <- fs::path(
     book_path,
@@ -103,15 +103,17 @@ test_down <- function(
 
   all_tests <- unique(.tr$df$context)
 
-  older <- setwd(
-    fs::path(
-      getwd(), "tests/testthat"
-    )
-  )
+  # older <- setwd(
+  #   fs::path(
+  #     getwd(), "tests/testthat"
+  #   )
+  # )
 
-  all_tests_read <- lapply(as.character(all_tests), readLines)
+  all_tests_read <- lapply(fs::path(test_path, as.character(all_tests)), readLines)
 
-  names(all_tests_read) <- all_tests
+  names(all_tests_read) <- fs::path(test_path, as.character(all_tests)) #all_tests
+
+  # browser()
 
   all_tests_read <- all_tests_read %>%
     purrr::imap(~{
@@ -131,7 +133,7 @@ test_down <- function(
   )
 
 
-  setwd(older)
+  # setwd(older)
 
   a <- do.call(
     rbind,
@@ -200,9 +202,10 @@ test_down <- function(
     )
   }
 
-  res <- render(
-    book_rmd
+  res <- rmarkdown::render(
+    input = book_rmd
   )
+  # browser()
 
   if (open){
     browseURL(res)

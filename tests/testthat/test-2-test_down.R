@@ -1,5 +1,6 @@
 # context("Verify testdown work")
 
+# herewd <- getwd()
 # Copy fake package
 tmppkg <- tempfile(pattern = "pkg-")
 dir.create(tmppkg)
@@ -66,4 +67,7 @@ test_that("test_down escapes and find tests errors", {
   expect_true(length(success_ok) == 1)
   expect_true(all(table_success_expectation_same %in% table_success))
 })
+
+# setwd(herewd)
+unlink(tmppkg, recursive = TRUE)
 
