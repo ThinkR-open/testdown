@@ -62,4 +62,4 @@ use_package("bookdown")
 use_package("magrittr")
 use_tidy_description()
 
-attachment::att_to_description(extra.suggests = "bookdown")
+attachment::att_amend_desc(extra.suggests = "bookdown")

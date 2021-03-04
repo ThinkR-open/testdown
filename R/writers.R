@@ -104,6 +104,7 @@ write_parts <- function(
 ){
   mapply(function(.x, .y) {
     table_to_insert <- .x
+    table_to_insert$expectation <- htmltools::htmlEscape(table_to_insert$expectation)
     write_in("\n")
     write_in( paste( "#", basename(.y) ) )
     write_in("\n")
