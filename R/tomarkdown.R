@@ -144,12 +144,16 @@ test_down <- function(
     were_skipped_df
   )
 
+  # browser()
   .tr$df <- split(.tr$df, .tr$df$context)
-  .tr$df <- purrr::map_df(
+  .tr$df <- purrr::map(
     .tr$df, function(x){
       order_it(x)
     }
-  )
+  ) %>% do.call(rbind, .)
+  rownames(.tr$df) <- NULL
+
+
   .tr$df$test <- na_fill(.tr$df$test)
 
   write_in <- function(x = "\n", there = book_rmd){
