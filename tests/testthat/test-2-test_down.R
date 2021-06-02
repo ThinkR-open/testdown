@@ -18,6 +18,7 @@ out <- test_down(
   open = FALSE,
   book_path = out.dir
 )
+browseURL(out)
 
 # Readlines with tests errors
 lines_escapehtml <- readLines(file.path(out.dir, "test-golem-utils-ui-r.html"))

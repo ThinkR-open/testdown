@@ -34,6 +34,8 @@ Run a test_down example
 }
 \examples{
 if (interactive()){
-   test_down_example()
+ dir_book <- tempfile()
+ dir.create(dir_book)
+ test_down_example(book_path = dir_book)
 }
 }

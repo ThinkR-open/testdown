@@ -174,7 +174,7 @@ write_parts <- function(
     write_in(
       kable(
         row.names = FALSE,
-        table_to_insert
+        table_to_insert, escape = FALSE
       )
     )
     write_in()
