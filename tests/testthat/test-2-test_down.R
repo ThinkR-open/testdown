@@ -21,7 +21,7 @@ out <- test_down(
 browseURL(out)
 
 # Readlines with tests errors
-lines_escapehtml <- readLines(file.path(out.dir, "test-golem-utils-ui-r.html"))
+lines_escapehtml <- readLines(file.path(out.dir, "test-golem_utils_ui.html"))
 # Correct number of errors
 errors_ok <- grep("<li><p><strong>Number of errored expectation(s)</strong> : 2</p></li>", lines_escapehtml, fixed = TRUE)
 # HTML code correctly escaped
@@ -39,7 +39,7 @@ test_that("test_down escapes and find tests errors", {
     file.exists(
       file.path(
         out.dir,
-        "test-golem-utils-ui-r.html"
+        "test-golem_utils_ui.html"
       )
     )
   )
@@ -49,7 +49,7 @@ test_that("test_down escapes and find tests errors", {
 })
 
 # Readlines with tests success
-lines_escapehtml <- readLines(file.path(out.dir, "test-my-mean-r.html"))
+lines_escapehtml <- readLines(file.path(out.dir, "test-my_mean.html"))
 # Correct number of errors
 success_ok <- grep("<li><p><strong>Number of successful expectation(s)</strong> : 2</p></li>", lines_escapehtml, fixed = TRUE)
 # Result success in table
@@ -61,7 +61,7 @@ test_that("test_down escapes and find tests errors", {
     file.exists(
       file.path(
         out.dir,
-        "test-my-mean-r.html"
+        "test-my_mean.html"
       )
     )
   )
