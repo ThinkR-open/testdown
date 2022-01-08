@@ -8,6 +8,7 @@ test_down_example(
   project_name = NULL,
   author = NULL,
   environment = here::here(),
+  pkg = system.file("fakepkg", package = "testdown"),
   book_path = "tests/testdown",
   with_help = TRUE,
   open = interactive()
@@ -19,6 +20,8 @@ test_down_example(
 \item{author}{The author of the test report. Default is set to `NULL`, then it will be skipped.}
 
 \item{environment}{A name for the testing environment. Default is `here::here()`.}
+
+\item{pkg}{The path to the package to document. Default is `here::here()`.}
 
 \item{book_path}{The path to the bookdown output. Default is `"tests/testdown"`.}
 

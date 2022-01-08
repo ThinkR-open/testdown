@@ -13,12 +13,14 @@ file.copy(
 # Create testdown
 out.dir <- tempfile(pattern = "testdown-")
 unlink(out.dir)
-out <- test_down(
-  pkg = file.path(tmppkg, "fake.package"),
-  open = FALSE,
-  book_path = out.dir
-)
-browseURL(out)
+withr::with_dir(tmppkg, {
+  out <- test_down(
+    pkg = file.path(tmppkg, "fake.package"),
+    open = FALSE,
+    book_path = out.dir
+  )
+})
+# browseURL(out)
 
 # Readlines with tests errors
 lines_escapehtml <- readLines(file.path(out.dir, "test-golem_utils_ui.html"))

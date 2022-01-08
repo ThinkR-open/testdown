@@ -1,3 +1,50 @@
+## fake package
+# fakename <- sprintf(
+#   "%s%s",
+#   paste0(sample(letters, 10, TRUE), collapse = ""),
+#   gsub("[ :-]", "", Sys.time())
+# )
+#
+# tpdir <- tempfile("dir-")
+# dir.create(tpdir)
+# # unlink(file.path(tpdir,fakename), recursive = TRUE)
+# pkg <- file.path(tpdir, fakename)
+# withr::with_dir(tpdir, {
+#   usethis::create_package(pkg, open = FALSE)
+#   fs::file_copy(
+#     system.file("testhelpers/hello-world.R", package = "testdown"),
+#     fs::path(pkg, "R")
+#   )
+#   fs::file_copy(
+#     system.file("testhelpers/times.R", package = "testdown"),
+#     fs::path(pkg, "R")
+#   )
+#   fs::dir_copy(
+#     system.file("testhelpers/tests", package = "testdown"),
+#     pkg
+#   )
+#   devtools::document(pkg)
+# })
+#remotes::install_local(pkg)
+# devtools::check(pkg)
+# usethis::use_package("testthat")
+
+# Copy fake package
+tpdir <- tempfile("dir-")
+dir.create(tpdir)
+# unlink(file.path(tpdir,fakename), recursive = TRUE)
+# pkg <- file.path(tpdir, fakename)
+# pkg <- tempfile(pattern = "pkg-")
+# dir.create(pkg)
+file.copy(
+  system.file("fake.package", package = "testdown"),
+  tpdir,
+  recursive = TRUE
+)
+pkg <- file.path(tpdir, 'fake.package')
+browseURL(pkg)
+
+# test ----
 withr::with_dir(pkg, {
   test_that("testdown works", {
     # browser()
@@ -77,3 +124,4 @@ withr::with_dir(pkg, {
 
 })
 
+unlink(tpdir, recursive = TRUE)

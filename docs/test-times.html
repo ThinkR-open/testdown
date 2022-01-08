@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Test File 2 test-times.R | {testdown} report</title>
   <meta name="description" content="Test File 2 test-times.R | {testdown} report for package {fakepkg}" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Test File 2 test-times.R | {testdown} report" />
   <meta property="og:type" content="book" />
@@ -23,17 +23,18 @@
 
 
 
-<meta name="date" content="2020-09-15" />
+<meta name="date" content="2022-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="test-hello-world-r.html"/>
+<link rel="prev" href="test-hello-world.html"/>
 <link rel="next" href="aggregated-failures-and-errors.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 
@@ -72,8 +75,8 @@
 <li><a href="testdown-report-for-fakepkg.html#testdown-report-for-fakepkg"><code>{testdown}</code> report for <code>{fakepkg}</code></a></li>
 <li class="part"><span><b>I Results</b></span></li>
 <li class="chapter" data-level="" data-path="global-results-for-package-fakepkg.html"><a href="global-results-for-package-fakepkg.html"><i class="fa fa-check"></i>Global results for package fakepkg</a></li>
-<li class="chapter" data-level="1" data-path="test-hello-world-r.html"><a href="test-hello-world-r.html"><i class="fa fa-check"></i><b>1</b> test-hello-world.R</a></li>
-<li class="chapter" data-level="2" data-path="test-times-r.html"><a href="test-times-r.html"><i class="fa fa-check"></i><b>2</b> test-times.R</a></li>
+<li class="chapter" data-level="1" data-path="test-hello-world.html"><a href="test-hello-world.html"><i class="fa fa-check"></i><b>1</b> test-hello-world.R</a></li>
+<li class="chapter" data-level="2" data-path="test-times.html"><a href="test-times.html"><i class="fa fa-check"></i><b>2</b> test-times.R</a></li>
 <li class="chapter" data-level="" data-path="aggregated-failures-and-errors.html"><a href="aggregated-failures-and-errors.html"><i class="fa fa-check"></i>Aggregated failures and errors</a></li>
 <li class="chapter" data-level="" data-path="aggregated-warnings.html"><a href="aggregated-warnings.html"><i class="fa fa-check"></i>Aggregated warnings</a></li>
 <li class="chapter" data-level="" data-path="aggregated-skipped.html"><a href="aggregated-skipped.html"><i class="fa fa-check"></i>Aggregated skipped</a></li>
@@ -141,7 +144,7 @@
 <td align="left">expect_equal(times(1, 3), 3)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-times.R#3</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">times() works</td>
@@ -149,7 +152,7 @@
 <td align="left">expect_error(times(1, “3”))</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-times.R#5</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">times() works</td>
@@ -157,7 +160,7 @@
 <td align="left">expect_error(times(1, “a”))</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-times.R#7</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">times() works</td>
@@ -165,7 +168,7 @@
 <td align="left">expect_length(times(1, 1:10), 1)</td>
 <td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-times.R#9</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">times() works</td>
@@ -173,7 +176,7 @@
 <td align="left">expect_is(times(1, 1:10),“vector”)</td>
 <td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-times.R#11</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">times() works</td>
@@ -181,7 +184,7 @@
 <td align="left">expect_equal(times(1, “3”), 3)</td>
 <td align="left"><span title="The code of this expectation returned an error.">❌ <font color='red'>Error (test stopped)</font></span></td>
 <td align="left">test-times.R#13</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">times() works</td>
@@ -195,9 +198,9 @@
 <td align="left">times() works with matrix</td>
 <td align="left">Testing that the matrix size is 10 for times(1:3, matrix(1:10))</td>
 <td align="left">expect_length(times(1:3, matrix(1:10)), 10)</td>
-<td align="left"><span title="The code of this expectation returned a warning">⚠️ <font color='orange'>Warning</font></span></td>
+<td align="left"><span title="The code of this expectation returned a warning.">⚠️ <font color='orange'>Warning</font></span></td>
 <td align="left">test-times.R#21</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">times() works with matrix</td>
@@ -205,7 +208,7 @@
 <td align="left">expect_length(times(1:3, matrix(1:15)), 10)</td>
 <td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-times.R#23</td>
-<td align="left">2020-09-15 11:07:21</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">times() works with matrix</td>
@@ -213,7 +216,7 @@
 <td align="left">expect_length(times(1:2, matrix(1:10)), 10)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-times.R#25</td>
-<td align="left">2020-09-15 11:07:21</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">times() works with {agivenpackage}</td>
@@ -221,7 +224,7 @@
 <td align="left">expect_length(iris, 5)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-times.R#30</td>
-<td align="left">2020-09-15 11:07:21</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">times() works with {agivenpackage}</td>
@@ -229,7 +232,7 @@
 <td align="left">skip_if_not_installed(“agivenpackage”)</td>
 <td align="left"><span title="This expectation is a skip expectation, and it was validated.">🔄 <font color='blue'>Validated skip</font></span></td>
 <td align="left">test-times.R#33</td>
-<td align="left">2020-09-15 11:07:21</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">times() works with {agivenpackage}</td>
@@ -256,12 +259,11 @@
           </div>
         </div>
       </div>
-<a href="test-hello-world-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="test-hello-world.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="aggregated-failures-and-errors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -280,6 +282,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -300,10 +303,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": false,
 "toc": {
 "collapse": "subsection"
-},
-"search": false
+}
 });
 });
 </script>

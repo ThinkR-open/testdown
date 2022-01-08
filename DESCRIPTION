@@ -29,8 +29,7 @@ Imports:
     stats,
     testthat,
     tools,
-    utils,
-    xfun
+    utils
 Suggests: 
     bookdown,
     rlang,

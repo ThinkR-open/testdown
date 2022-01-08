@@ -50,3 +50,8 @@ usethis::use_github_action_check_standard()
 use_tidy_description()
 
 attachment::att_amend_desc(extra.suggests = "bookdown")
+
+# Create the example
+pkgload::load_all()
+unlink("docs")
+test_down_example(book_path = "docs")

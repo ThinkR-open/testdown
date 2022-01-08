@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Test File 1 test-hello-world.R | {testdown} report</title>
   <meta name="description" content="Test File 1 test-hello-world.R | {testdown} report for package {fakepkg}" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Test File 1 test-hello-world.R | {testdown} report" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-09-15" />
+<meta name="date" content="2022-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,9 +31,10 @@
   
   
 <link rel="prev" href="global-results-for-package-fakepkg.html"/>
-<link rel="next" href="test-times-r.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="next" href="test-times.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 
@@ -72,8 +75,8 @@
 <li><a href="testdown-report-for-fakepkg.html#testdown-report-for-fakepkg"><code>{testdown}</code> report for <code>{fakepkg}</code></a></li>
 <li class="part"><span><b>I Results</b></span></li>
 <li class="chapter" data-level="" data-path="global-results-for-package-fakepkg.html"><a href="global-results-for-package-fakepkg.html"><i class="fa fa-check"></i>Global results for package fakepkg</a></li>
-<li class="chapter" data-level="1" data-path="test-hello-world-r.html"><a href="test-hello-world-r.html"><i class="fa fa-check"></i><b>1</b> test-hello-world.R</a></li>
-<li class="chapter" data-level="2" data-path="test-times-r.html"><a href="test-times-r.html"><i class="fa fa-check"></i><b>2</b> test-times.R</a></li>
+<li class="chapter" data-level="1" data-path="test-hello-world.html"><a href="test-hello-world.html"><i class="fa fa-check"></i><b>1</b> test-hello-world.R</a></li>
+<li class="chapter" data-level="2" data-path="test-times.html"><a href="test-times.html"><i class="fa fa-check"></i><b>2</b> test-times.R</a></li>
 <li class="chapter" data-level="" data-path="aggregated-failures-and-errors.html"><a href="aggregated-failures-and-errors.html"><i class="fa fa-check"></i>Aggregated failures and errors</a></li>
 <li class="chapter" data-level="" data-path="aggregated-warnings.html"><a href="aggregated-warnings.html"><i class="fa fa-check"></i>Aggregated warnings</a></li>
 <li class="chapter" data-level="" data-path="aggregated-skipped.html"><a href="aggregated-skipped.html"><i class="fa fa-check"></i>Aggregated skipped</a></li>
@@ -141,7 +144,7 @@
 <td align="left">expect_equal(hello_world(“colin”), “Hello world, my name is colin!”)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#3</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works</td>
@@ -149,7 +152,7 @@
 <td align="left">expect_is(hello_world(“colin”), “character”)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#5</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">hello_world() works</td>
@@ -157,7 +160,7 @@
 <td align="left">expect_match(hello_world(“colin”), “World”)</td>
 <td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-hello-world.R#7</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works</td>
@@ -165,7 +168,7 @@
 <td align="left">expect_match(hello_world(“colin”), “Hello”)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#9</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">hello_world() works with vectors</td>
@@ -173,7 +176,7 @@
 <td align="left">expect_error(hello_world(“colin”, “seb”), 2)</td>
 <td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-hello-world.R#15</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works with vectors</td>
@@ -181,7 +184,7 @@
 <td align="left">expect_length(hello_world(c(“colin”, “seb”)), 2)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#17</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="odd">
 <td align="left">hello_world() works with vectors</td>
@@ -189,7 +192,7 @@
 <td align="left">expect_length(hello_world(LETTERS), 25)</td>
 <td align="left"><span title="This expectation is not successful.">❌ <font color='red'>Failure</font></span></td>
 <td align="left">test-hello-world.R#19</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 <tr class="even">
 <td align="left">hello_world() works with vectors</td>
@@ -197,7 +200,7 @@
 <td align="left">expect_length(hello_world(LETTERS), 26)</td>
 <td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
 <td align="left">test-hello-world.R#21</td>
-<td align="left">2020-09-15 11:07:20</td>
+<td align="left">2022-01-08 19:00:06</td>
 </tr>
 </tbody>
 </table>
@@ -209,11 +212,10 @@
         </div>
       </div>
 <a href="global-results-for-package-fakepkg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="test-times-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="test-times.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -232,6 +234,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -252,10 +255,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": false,
 "toc": {
 "collapse": "subsection"
-},
-"search": false
+}
 });
 });
 </script>

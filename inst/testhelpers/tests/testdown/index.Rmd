@@ -37,7 +37,8 @@ __Tested package Information:__
 
 <details><summary>Test session infrastructure</summary>
 ```{r echo = FALSE}
-xfun::session_info()
+# xfun::session_info()
+sessionInfo()
 ```
 </details>
 
