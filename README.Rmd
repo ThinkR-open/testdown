@@ -24,13 +24,28 @@ file.copy(list.files("reference/figures", full.names = TRUE),
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![R build status](https://github.com/ThinkR-open/testdown/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/testdown/actions)
+[![R-CMD-check](https://github.com/ThinkR-open/testdown/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/testdown/actions)
 <!-- badges: end -->
 
 The goal of `{testdown}` is to generate a bookdown report of `{testthat}` results
 
 ## Installation
 
-You can install the dev version of `{testdown}` from GitHub with:
+You can install the dev version of `{testdown}` 
+
+- from r-universe
+
+```r
+# Enable universe(s) by thinkr-open
+options(repos = c(
+    thinkropen = 'https://thinkr-open.r-universe.dev',
+    CRAN = 'https://cloud.r-project.org'))
+
+# Install some packages
+install.packages('testdown')
+```
+
+- from GitHub with:
 
 ``` r
 remotes::install_github("ThinkR-open/testdown")

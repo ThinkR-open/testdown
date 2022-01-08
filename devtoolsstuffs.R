@@ -46,20 +46,7 @@ usethis::use_test("test_down")
 # CI
 usethis::use_github_action_check_standard()
 
-# Get the dependencies
-use_package("attempt")
-use_package("R6")
-use_package("glue")
-use_package("testthat")
-use_package("devtools")
-use_package("dplyr")
-use_package("knitr")
-use_package("rmarkdown")
-use_package("stats")
-use_package("utils")
-use_package("tidyr")
-use_package("bookdown")
-use_package("magrittr")
+# Get the dependencies ----
 use_tidy_description()
 
 attachment::att_amend_desc(extra.suggests = "bookdown")
