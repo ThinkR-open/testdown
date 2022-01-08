@@ -15,6 +15,7 @@ test_down_example <- function(
   project_name = NULL,
   author = NULL,
   environment = here::here(),
+  pkg = system.file("fakepkg", package = "testdown"),
   book_path = "tests/testdown",
   with_help = TRUE,
   open = interactive()
@@ -23,7 +24,7 @@ test_down_example <- function(
     project_name = project_name,
     author = author,
     environment = environment,
-    pkg = system.file("fakepkg", package = "testdown"),
+    pkg = pkg,
     book_path = book_path,
     with_help = with_help,
     open = open

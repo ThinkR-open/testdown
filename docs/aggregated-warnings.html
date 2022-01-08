@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Aggregated warnings | {testdown} report</title>
   <meta name="description" content="Aggregated warnings | {testdown} report for package {fakepkg}" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Aggregated warnings | {testdown} report" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-09-15" />
+<meta name="date" content="2022-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="aggregated-failures-and-errors.html"/>
 <link rel="next" href="aggregated-skipped.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 
@@ -72,8 +75,8 @@
 <li><a href="testdown-report-for-fakepkg.html#testdown-report-for-fakepkg"><code>{testdown}</code> report for <code>{fakepkg}</code></a></li>
 <li class="part"><span><b>I Results</b></span></li>
 <li class="chapter" data-level="" data-path="global-results-for-package-fakepkg.html"><a href="global-results-for-package-fakepkg.html"><i class="fa fa-check"></i>Global results for package fakepkg</a></li>
-<li class="chapter" data-level="1" data-path="test-hello-world-r.html"><a href="test-hello-world-r.html"><i class="fa fa-check"></i><b>1</b> test-hello-world.R</a></li>
-<li class="chapter" data-level="2" data-path="test-times-r.html"><a href="test-times-r.html"><i class="fa fa-check"></i><b>2</b> test-times.R</a></li>
+<li class="chapter" data-level="1" data-path="test-hello-world.html"><a href="test-hello-world.html"><i class="fa fa-check"></i><b>1</b> test-hello-world.R</a></li>
+<li class="chapter" data-level="2" data-path="test-times.html"><a href="test-times.html"><i class="fa fa-check"></i><b>2</b> test-times.R</a></li>
 <li class="chapter" data-level="" data-path="aggregated-failures-and-errors.html"><a href="aggregated-failures-and-errors.html"><i class="fa fa-check"></i>Aggregated failures and errors</a></li>
 <li class="chapter" data-level="" data-path="aggregated-warnings.html"><a href="aggregated-warnings.html"><i class="fa fa-check"></i>Aggregated warnings</a></li>
 <li class="chapter" data-level="" data-path="aggregated-skipped.html"><a href="aggregated-skipped.html"><i class="fa fa-check"></i>Aggregated skipped</a></li>
@@ -105,11 +108,11 @@
 </blockquote>
 <table>
 <colgroup>
-<col width="7%" />
-<col width="12%" />
-<col width="29%" />
-<col width="20%" />
-<col width="29%" />
+<col width="6%" />
+<col width="11%" />
+<col width="27%" />
+<col width="18%" />
+<col width="36%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -126,7 +129,7 @@
 <td align="left">times() works with matrix</td>
 <td align="left">Testing that the matrix size is 10 for times(1:3, matrix(1:10))</td>
 <td align="left">expect_length(times(1:3, matrix(1:10)), 10)</td>
-<td align="left">longer object length is not a multiple of shorter object length</td>
+<td align="left">la taille d’un objet plus long n’est pas multiple de la taille d’un objet plus court</td>
 </tr>
 </tbody>
 </table>
@@ -141,7 +144,6 @@
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -160,6 +162,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -180,10 +183,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": false,
 "toc": {
 "collapse": "subsection"
-},
-"search": false
+}
 });
 });
 </script>

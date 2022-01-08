@@ -3,6 +3,7 @@
 * Update tests
 * Use GitHub Actions
 * Fix: protect HTML outputs as code
+* Remove {xfun} dependency
 
 # testdown 0.1.1
 

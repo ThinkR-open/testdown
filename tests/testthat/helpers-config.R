@@ -28,32 +28,3 @@ expect_path_exists <- function(dir) {
 
   invisible(act$val)
 }
-
-
-## fake package
-fakename <- sprintf(
-  "%s%s",
-  paste0(sample(letters, 10, TRUE), collapse = ""),
-  gsub("[ :-]", "", Sys.time())
-)
-
-tpdir <- normalizePath(tempdir())
-unlink(file.path(tpdir,fakename), recursive = TRUE)
-pkg <- file.path(tpdir, fakename)
-usethis::create_package(pkg, open = FALSE)
-fs::file_copy(
-  system.file("testhelpers/hello-world.R", package = "testdown"),
-  fs::path(pkg, "R")
-)
-fs::file_copy(
-  system.file("testhelpers/times.R", package = "testdown"),
-  fs::path(pkg, "R")
-)
-fs::dir_copy(
-  system.file("testhelpers/tests", package = "testdown"),
-  pkg
-)
-devtools::document(pkg)
-#remotes::install_local(pkg)
-# devtools::check(pkg)
-# usethis::use_package("testthat")
