@@ -118,7 +118,7 @@ test_down <- function(
   all_tests_read <- all_tests_read %>%
     purrr::imap(~{
       names(.x) <- paste0(normalizePath(.y), "#", 1:length(.x))
-      res <- grep("expect_*", .x, value = TRUE)
+      res <- grep("expect\\_", .x, value = TRUE)
       gsub("^ +(.*)", "\\1", res)
     }) %>%
     unname() %>%

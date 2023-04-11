@@ -23,8 +23,7 @@ file.copy(list.files("reference/figures", full.names = TRUE),
 
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![R build status](https://github.com/ThinkR-open/testdown/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/testdown/actions)
-[![R-CMD-check](https://github.com/ThinkR-open/testdown/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/testdown/actions)
+[![R-CMD-check](https://github.com/ThinkR-open/testdown/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ThinkR-open/testdown/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of `{testdown}` is to generate a bookdown report of `{testthat}` results
