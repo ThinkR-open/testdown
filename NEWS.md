@@ -1,3 +1,7 @@
+# testdown 0.1.2.9000
+
+* Change the regexp to fin "expect"
+
 # testdown 0.1.2
 
 * Update tests
