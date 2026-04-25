@@ -167,6 +167,9 @@ write_parts <- function(
 
     for (i in names(table_to_insert)){
       table_to_insert[, i] <- gsub("\\$", "&#36;", table_to_insert[, i])
+      # Collapse blank lines so kable does not spill the tail of a cell
+      # onto the next table row (#4).
+      table_to_insert[, i] <- sanitize_kable_cell(table_to_insert[, i])
     }
 
     write_in()

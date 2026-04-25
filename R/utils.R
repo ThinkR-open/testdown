@@ -104,22 +104,45 @@ get_desc <- function(
   fls <- readLines(normalizePath(attr(result$srcref, "srcfile")$filename))
   parsed <- parse_text(fls, NULL)
   tags <- map(parsed, "tags") %>% flatten()
-  lines <- keep(
-    tags,
-    map(tags, "line") == result$srcref[1] - 1
-  )
-  if (!length(lines)){
-    lines <- keep(
-      tags,
-      map(tags, "line") == result$srcref[1] - 2
-    )
-  }
-  if (length(lines)){
-    lines[[1]]$val
+  expectation_line <- result$srcref[1]
+
+  # Pick the closest @description tag *above* this expectation. Previously
+  # the code only looked exactly 1 or 2 lines above, which missed
+  # descriptions placed further up (e.g. before intermediate setup calls
+  # inside the same test_that block) — see issue #18.
+  tag_lines <- vapply(tags, function(x) x$line %||% NA_integer_, integer(1))
+  candidates_idx <- which(!is.na(tag_lines) & tag_lines < expectation_line)
+  if (length(candidates_idx)) {
+    nearest <- candidates_idx[which.max(tag_lines[candidates_idx])]
+    val <- tags[[nearest]]$val
+    # A multi-line description would otherwise carry a literal newline
+    # into the kable cell and spill the trailing portion onto the wrong
+    # column (#18). Collapse any inner newlines into a single space.
+    gsub("[[:space:]]*\n[[:space:]]*", " ", val)
   } else {
     " "
   }
+}
 
+# tiny null-coalescer for older R / safer reads
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
+#' Sanitize a string for inclusion in a kable cell.
+#'
+#' kable interprets a double newline as a paragraph break, which spills the
+#' tail of the cell onto the next row of the rendered table (#4). Collapse
+#' consecutive blank lines to a single newline before passing the value
+#' through.
+#'
+#' @param x character vector.
+#' @return character vector, same length, safe to drop into a kable cell.
+#' @noRd
+sanitize_kable_cell <- function(x) {
+  if (!length(x)) return(x)
+  out <- gsub("\r\n", "\n", x, fixed = TRUE)
+  # Collapse runs of blank lines into a single newline.
+  out <- gsub("(\n[[:blank:]]*){2,}", "\n", out)
+  out
 }
 
 cat_if_verbose <- function(
