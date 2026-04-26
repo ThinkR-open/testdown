@@ -48,6 +48,24 @@ test_that("get_desc() finds a description that is more than two lines above (#18
   expect_match(desc, "Top-level description", fixed = TRUE)
 })
 
+test_that("get_desc() does not bleed a description across test_that blocks (self-review of #18)", {
+  path <- write_fixture(c(
+    "test_that(\"first test with desc\", {",
+    "  #' @description Description for the FIRST test only",
+    "  expect_true(TRUE)",
+    "})",
+    "",
+    "test_that(\"second test without desc\", {",
+    "  expect_true(TRUE)",
+    "})"
+  ))
+  on.exit(unlink(path), add = TRUE)
+  res <- make_fake_result(path, line = 7L) # second test's expect line
+  desc <- get_desc(res)
+  expect_equal(desc, " ",
+    info = "second test_that has no description and must NOT inherit the first test's")
+})
+
 test_that("get_desc() returns ' ' when there is no description tag", {
   path <- write_fixture(c(
     "test_that(\"no desc\", {",

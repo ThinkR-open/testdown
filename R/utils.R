@@ -106,12 +106,22 @@ get_desc <- function(
   tags <- map(parsed, "tags") %>% flatten()
   expectation_line <- result$srcref[1]
 
-  # Pick the closest @description tag *above* this expectation. Previously
-  # the code only looked exactly 1 or 2 lines above, which missed
-  # descriptions placed further up (e.g. before intermediate setup calls
-  # inside the same test_that block) — see issue #18.
+  # Scope the search to the current test_that() block so a description
+  # belonging to a previous test_that doesn't bleed into this one — found
+  # while reviewing my own #18 fix. The block starts at the most recent
+  # line at or above `expectation_line` that opens a test_that() call.
+  block_start <- find_test_that_start(fls, expectation_line)
+
+  # Pick the closest @description tag *above* this expectation, but
+  # within the same test_that block. Previously the code only looked
+  # exactly 1 or 2 lines above, which missed descriptions placed further
+  # up (e.g. before intermediate setup calls inside the same block).
   tag_lines <- vapply(tags, function(x) x$line %||% NA_integer_, integer(1))
-  candidates_idx <- which(!is.na(tag_lines) & tag_lines < expectation_line)
+  candidates_idx <- which(
+    !is.na(tag_lines) &
+      tag_lines < expectation_line &
+      tag_lines >= block_start
+  )
   if (length(candidates_idx)) {
     nearest <- candidates_idx[which.max(tag_lines[candidates_idx])]
     val <- tags[[nearest]]$val
@@ -122,6 +132,22 @@ get_desc <- function(
   } else {
     " "
   }
+}
+
+#' Find the line number of the most recent `test_that(` call at or above
+#' `line` in `fls`. Returns `1L` (start-of-file) when none is found, which
+#' lets `get_desc()` fall back to file-scope behaviour.
+#'
+#' @param fls character vector, the file's lines.
+#' @param line integer, current expectation line.
+#' @noRd
+find_test_that_start <- function(fls, line) {
+  if (line < 1L || !length(fls)) return(1L)
+  upper <- min(line, length(fls))
+  for (i in upper:1L) {
+    if (grepl("\\btest_that\\s*\\(", fls[i])) return(i)
+  }
+  1L
 }
 
 # tiny null-coalescer for older R / safer reads
