@@ -104,22 +104,71 @@ get_desc <- function(
   fls <- readLines(normalizePath(attr(result$srcref, "srcfile")$filename))
   parsed <- parse_text(fls, NULL)
   tags <- map(parsed, "tags") %>% flatten()
-  lines <- keep(
-    tags,
-    map(tags, "line") == result$srcref[1] - 1
+  expectation_line <- result$srcref[1]
+
+  # Scope the search to the current test_that() block so a description
+  # belonging to a previous test_that doesn't bleed into this one — found
+  # while reviewing my own #18 fix. The block starts at the most recent
+  # line at or above `expectation_line` that opens a test_that() call.
+  block_start <- find_test_that_start(fls, expectation_line)
+
+  # Pick the closest @description tag *above* this expectation, but
+  # within the same test_that block. Previously the code only looked
+  # exactly 1 or 2 lines above, which missed descriptions placed further
+  # up (e.g. before intermediate setup calls inside the same block).
+  tag_lines <- vapply(tags, function(x) x$line %||% NA_integer_, integer(1))
+  candidates_idx <- which(
+    !is.na(tag_lines) &
+      tag_lines < expectation_line &
+      tag_lines >= block_start
   )
-  if (!length(lines)){
-    lines <- keep(
-      tags,
-      map(tags, "line") == result$srcref[1] - 2
-    )
-  }
-  if (length(lines)){
-    lines[[1]]$val
+  if (length(candidates_idx)) {
+    nearest <- candidates_idx[which.max(tag_lines[candidates_idx])]
+    val <- tags[[nearest]]$val
+    # A multi-line description would otherwise carry a literal newline
+    # into the kable cell and spill the trailing portion onto the wrong
+    # column (#18). Collapse any inner newlines into a single space.
+    gsub("[[:space:]]*\n[[:space:]]*", " ", val)
   } else {
     " "
   }
+}
 
+#' Find the line number of the most recent `test_that(` call at or above
+#' `line` in `fls`. Returns `1L` (start-of-file) when none is found, which
+#' lets `get_desc()` fall back to file-scope behaviour.
+#'
+#' @param fls character vector, the file's lines.
+#' @param line integer, current expectation line.
+#' @noRd
+find_test_that_start <- function(fls, line) {
+  if (line < 1L || !length(fls)) return(1L)
+  upper <- min(line, length(fls))
+  for (i in upper:1L) {
+    if (grepl("\\btest_that\\s*\\(", fls[i])) return(i)
+  }
+  1L
+}
+
+# tiny null-coalescer for older R / safer reads
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
+#' Sanitize a string for inclusion in a kable cell.
+#'
+#' kable interprets a double newline as a paragraph break, which spills the
+#' tail of the cell onto the next row of the rendered table (#4). Collapse
+#' consecutive blank lines to a single newline before passing the value
+#' through.
+#'
+#' @param x character vector.
+#' @return character vector, same length, safe to drop into a kable cell.
+#' @noRd
+sanitize_kable_cell <- function(x) {
+  if (!length(x)) return(x)
+  out <- gsub("\r\n", "\n", x, fixed = TRUE)
+  # Collapse runs of blank lines into a single newline.
+  out <- gsub("(\n[[:blank:]]*){2,}", "\n", out)
+  out
 }
 
 cat_if_verbose <- function(

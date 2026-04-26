@@ -124,9 +124,17 @@ test_down <- function(
     unname() %>%
     unlist()
 
-  were_skipped <- which(
-    ! basename(names(all_tests_read)) %in% .tr$df$location
-  )
+  # An empty test_that() body produces no `expect_*` line, so
+  # `all_tests_read` ends up as a zero-length character vector with no
+  # names — `basename(NULL)` would then error out (#15). Guard the lookup.
+  if (is.null(all_tests_read) || !length(all_tests_read)) {
+    all_tests_read <- stats::setNames(character(), character())
+    were_skipped <- integer()
+  } else {
+    were_skipped <- which(
+      ! basename(names(all_tests_read)) %in% .tr$df$location
+    )
+  }
 
   were_skipped_df <- build_were_skipped(
     were_skipped = all_tests_read[were_skipped]
